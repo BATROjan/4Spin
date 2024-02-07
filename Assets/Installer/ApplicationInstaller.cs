@@ -1,3 +1,4 @@
+using UI;
 using Zenject;
 
 namespace Installer
@@ -6,8 +7,12 @@ namespace Installer
     {
         public override void InstallBindings()
         {
-            CameraInstaller.CameraInstaller
-              .Install(Container);
+            CameraInstaller
+                .CameraInstaller
+                .Install(Container);
+            
+            UIRootInstaller
+                .Install(Container);
         }
     }
 }
