@@ -7,8 +7,10 @@ namespace UI.UIStartWindow
     {
         public override void InstallBindings()
         {
-            /*Container
-                .InstantiatePrefabResourceForComponent<UIStartWindow>("UIStartWindow");*/
+            Container
+                .Bind<UIStartWindowController>()
+                .AsSingle()
+                .NonLazy();
         }
     }
 }

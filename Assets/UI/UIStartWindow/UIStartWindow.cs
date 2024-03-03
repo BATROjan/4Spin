@@ -5,7 +5,8 @@ using Zenject;
 namespace UI.UIStartWindow
 {
     public class UIStartWindow : UIWindow
-    { 
+    {
+        public UIButton[] Buttons => buttons;
         [SerializeField] private UIButton[] buttons;
 
         public override void Show()
@@ -15,7 +16,5 @@ namespace UI.UIStartWindow
         public override void Hide()
         {
         }
-        public class Factory : PlaceholderFactory<UIStartWindow>
-        {}
     }
 }

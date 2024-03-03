@@ -1,4 +1,5 @@
 using System;
+using UI.UIService;
 using UnityEngine;
 
 namespace UI
@@ -7,6 +8,8 @@ namespace UI
     {
         public Action ShowAction { get; set; }
         public Action HideAction { get; set; }
+        
+        public IUIService UIService { get; set; }
 
         public abstract void Show();
         public abstract void Hide();

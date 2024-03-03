@@ -13,6 +13,10 @@ namespace Installer
             
             UIRootInstaller
                 .Install(Container);
+            Container
+                .Bind<GameController.GameController>()
+                .AsSingle()
+                .NonLazy();
         }
     }
 }

@@ -1,3 +1,4 @@
+using UI.UIService;
 using UI.UIStartWindow;
 using Zenject;
 
@@ -10,8 +11,17 @@ namespace UI
             UIStartWindowInstaller
                 .Install(Container);
             
+            Container.Bind<IUIRoot>()
+                .FromComponentInNewPrefabResource("UIRoot")
+                .AsSingle()
+                .NonLazy();
+
             Container
-                .InstantiatePrefabResourceForComponent<UIRoot>("UIRoot");
+                .Bind<IUIService>()
+                .To<UIService
+                    .UIService>()
+                .AsSingle()
+                .NonLazy();
         }
     }
 }

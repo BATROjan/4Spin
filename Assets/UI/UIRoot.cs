@@ -1,18 +1,16 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace UI
 {
     public class UIRoot : MonoBehaviour, IUIRoot
-    {
-        public Canvas Canvas
-        {
-            get => canvas;
-            set => canvas = value;
-        }
-
-        public UIWindow[] PoolWindows => PoolWindows;
-
+    { 
+        public Transform ActivateContainer => activateContainer;
+        public Transform DeativateContainer => deactivateContainer;
+        public Canvas RootCanvas => canvas;
+        
         [SerializeField] private Canvas canvas;
-        [SerializeField] private UIWindow[] poolWindows;
+        [SerializeField] private Transform activateContainer;
+        [SerializeField] private Transform deactivateContainer;
     }
 }

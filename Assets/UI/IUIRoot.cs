@@ -4,6 +4,9 @@ namespace UI
 {
     public interface IUIRoot
     {
-        Canvas Canvas { get; set; }
+        Transform ActivateContainer { get; }
+        Transform DeativateContainer { get; }
+        Canvas RootCanvas { get; }
+
     }
 }

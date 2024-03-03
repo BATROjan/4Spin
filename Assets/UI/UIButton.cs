@@ -14,6 +14,7 @@ namespace UI
         
         public void OnPointerClick(PointerEventData eventData)
         {
+            OnClick?.Invoke();
         }
     }
 }
