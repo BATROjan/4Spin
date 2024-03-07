@@ -1,3 +1,4 @@
+using Grid;
 using UI;
 using Zenject;
 
@@ -13,6 +14,10 @@ namespace Installer
             
             UIRootInstaller
                 .Install(Container);
+            
+            GridInstaller
+                .Install(Container);
+            
             Container
                 .Bind<GameController.GameController>()
                 .AsSingle()

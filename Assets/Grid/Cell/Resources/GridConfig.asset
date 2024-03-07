@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a6727d2df7d4ee2bee0984b377794e2, type: 3}
+  m_Name: GridConfig
+  m_EditorClassIdentifier: 
+  gridModels:
+  - diffcultLevel: 0
+    columnCount: 3
+    lineCount: 4
+  - diffcultLevel: 1
+    columnCount: 4
+    lineCount: 6
+  - diffcultLevel: 2
+    columnCount: 5
+    lineCount: 8
+  offset: 3.8
