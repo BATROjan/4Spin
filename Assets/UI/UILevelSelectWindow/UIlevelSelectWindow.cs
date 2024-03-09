@@ -1,15 +1,14 @@
-using DG.Tweening;
+using UI.UIService;
 using UnityEngine;
-using Image = UnityEngine.UI.Image;
+using UnityEngine.UI;
 
-namespace UI.UIStartWindow
+namespace UI.UILevelSelectWindow
 {
-    public class UIStartWindow : UIWindow
+    public class UIlevelSelectWindow : UIWindow
     {
         public UIButton[] Buttons => buttons;
         
         [SerializeField] private UIButton[] buttons;
-        [SerializeField] private Image traingleImage;
 
         public override void Show()
         {

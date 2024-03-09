@@ -22,8 +22,6 @@ namespace UI.UIService
 
             LoadWindows(UISource);
             InitWindows(_uIRoot.DeativateContainer);
-            
-            Show<UIStartWindow.UIStartWindow>();
         }
 
         public T Show<T>() where T : UIWindow

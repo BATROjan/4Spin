@@ -1,3 +1,4 @@
+using UI.UILevelSelectWindow;
 using UI.UIService;
 using UnityEngine.EventSystems;
 
@@ -5,36 +6,37 @@ namespace UI.UIStartWindow
 {
     public class UIStartWindowController
     {
-        private readonly GameController.GameController _gameController;
         private readonly IUIService _uiService;
-        
-        private UIButton[] _buttons;
-        
+
+        private UIStartWindow _uiStartWindow;
+
         public UIStartWindowController(
-            GameController.GameController gameController,
             IUIService uiService)
         {
-            _gameController = gameController;
             _uiService = uiService;
-            _buttons = _uiService.Get<UIStartWindow>().Buttons;
-            InitButtons();
+            _uiStartWindow = _uiService.Get<UIStartWindow>();
+            
+            _uiStartWindow.ShowAction += InitButtons;
+
+            _uiService.Show<UIStartWindow>();
         }
 
         public void InitButtons()
         {
-            _buttons[0].OnClick += StartGame;
+            _uiStartWindow.Buttons[0].OnClick += SelectLevel;
         }
 
-        private void StartGame()
+        private void SelectLevel()
         {
-            _gameController.StartGame();
             _uiService.Hide<UIStartWindow>();
+            _uiService.Show<UIlevelSelectWindow>();
+            
             UISubscribeButtons();
         }
         
         public void UISubscribeButtons()
         {
-            _buttons[0].OnClick -= StartGame;
+            _uiStartWindow.Buttons[0].OnClick -= SelectLevel;
         }
     }
 }

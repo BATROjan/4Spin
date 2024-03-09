@@ -1,3 +1,4 @@
+using UI.UILevelSelectWindow;
 using UI.UIService;
 using UI.UIStartWindow;
 using Zenject;
@@ -9,6 +10,9 @@ namespace UI
         public override void InstallBindings()
         {
             UIStartWindowInstaller
+                .Install(Container);
+            
+            UIselectWindowInstaller
                 .Install(Container);
             
             Container.Bind<IUIRoot>()
