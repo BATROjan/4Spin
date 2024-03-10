@@ -1,4 +1,5 @@
 using Coin;
+using DragController;
 using Grid;
 using PlayingField;
 using UI;
@@ -24,6 +25,9 @@ namespace Installer
                 .Install(Container);
             
             CoinInstaller
+                .Install(Container);
+            
+            DragControllerInstaller
                 .Install(Container);
             
             Container

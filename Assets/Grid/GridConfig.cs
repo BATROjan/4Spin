@@ -12,7 +12,7 @@ namespace Grid
         [SerializeField] private GridModel[] gridModels;
 
         private Dictionary<DiffcultLevel, GridModel> _dictionaryOfLevels = new();
-        private bool _isInit;
+        private bool _isInit = false;
 
         public GridModel GetGrid(DiffcultLevel diffcultLevel)
         {
