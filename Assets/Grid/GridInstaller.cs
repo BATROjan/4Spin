@@ -7,13 +7,24 @@ namespace Grid
     {
         public override void InstallBindings()
         {
-            Container.Bind<GridConfig>().FromScriptableObjectResource("GridConfig").AsSingle().NonLazy();
+            Container
+                .Bind<GridConfig>()
+                .FromScriptableObjectResource("GridConfig")
+                .AsSingle()
+                .NonLazy();
+            
             Container
                 .Bind<GridController>()
                 .AsSingle()
                 .NonLazy();
             
-            Container.BindMemoryPool<CellView, CellView.Pool>().FromComponentInNewPrefabResource("CellView");
+            Container
+            .BindMemoryPool<CellView, CellView.Pool>()
+            .FromComponentInNewPrefabResource("CellView");
+            
+            Container
+            .BindMemoryPool<ColumVew, ColumVew.Pool>()
+            .FromComponentInNewPrefabResource("ColumView");
         }
     }
 }

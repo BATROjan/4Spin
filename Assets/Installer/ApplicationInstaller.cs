@@ -1,4 +1,5 @@
 using Grid;
+using PlayingField;
 using UI;
 using Zenject;
 
@@ -13,6 +14,9 @@ namespace Installer
                 .Install(Container);
             
             UIRootInstaller
+                .Install(Container);
+            
+            PLayerFieldInstaller
                 .Install(Container);
             
             GridInstaller
