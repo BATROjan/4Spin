@@ -7,6 +7,7 @@ namespace Grid
 {
     public class  GridController
     {
+        private readonly CoinController _coinController;
         private readonly PlayingFieldController _playingFieldController;
         private readonly ColumVew.Pool _columViewPool;
         private readonly CellView.Pool _cellViewPool;
@@ -21,12 +22,14 @@ namespace Grid
         private PlayingFieldView _playingFieldView;
 
         public GridController(
+            CoinController coinController,
             PlayingFieldController playingFieldController,
             ColumVew.Pool columViewPool,
             CellView.Pool cellViewPool,
             GridConfig gridConfig
         )
         {
+            _coinController = coinController;
             _playingFieldController = playingFieldController;
             _columViewPool = columViewPool;
             _cellViewPool = cellViewPool;
@@ -37,24 +40,33 @@ namespace Grid
         { 
             _currentGridModel = _gridConfig.GetGrid(DiffcultLevel.Normal);
             
-          var playingFieldView = _playingFieldController.SpawnPlayingVew(_currentGridModel.diffcultLevel);
-          _playingFieldView = playingFieldView;
+            var playingFieldView = _playingFieldController.SpawnPlayingVew(_currentGridModel.diffcultLevel);
+            _playingFieldView = playingFieldView;
           
-          SpawnColums();
+            SpawnColums();
             
+            SpawnCell();
+            for (int i = 0; i < 2; i++)
+            {
+               var coin = _coinController.SpawnCoin(i);
+                coin.transform.SetParent(_playingFieldView.CoinSpawPoint[i], false);
+            }
+        }
+
+        private void SpawnCell()
+        {
             for (int i = 0; i < _currentGridModel.columnCount; i++)
             {
                 List<CellView> someCurrentCells = new List<CellView>();
 
                 for (int j = 0; j < _currentGridModel.lineCount; j++)
                 {
-                    
                     var cellPosition = _firstPosition + 3.8f * new Vector3(i, j, 0);
                     var newCell = _cellViewPool.Spawn();
-                    
+
                     newCell.transform.position = cellPosition;
                     _cellViewsList.Add(newCell);
-                    
+
                     someCurrentCells.Add(newCell);
                 }
 
@@ -62,11 +74,6 @@ namespace Grid
                 {
                     cell.transform.SetParent(_columViewsList[i].transform, false);
                 }
-            }
-
-            foreach (var colum in _columViewsList)
-            {
-                colum.transform.SetParent(_playingFieldView.Colums);
             }
         }
 
@@ -78,7 +85,10 @@ namespace Grid
                 var colum = _columViewPool.Spawn();
                 _columViewsList.Add(colum);
             }
-            
+            foreach (var colum in _columViewsList)
+            {
+                colum.transform.SetParent(_playingFieldView.Colums);
+            }
         }
     }
 }

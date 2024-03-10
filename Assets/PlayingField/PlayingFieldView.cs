@@ -7,11 +7,14 @@ using Zenject;
 public class PlayingFieldView : MonoBehaviour
 {
     public Transform Colums => colums;
+    public Transform[] CoinSpawPoint => coinSpawPoint;
     
     [SerializeField] private GameObject cylinder;
     [SerializeField] private GameObject left;
     [SerializeField] private GameObject right;
+    
     [SerializeField] private Transform colums;
+    [SerializeField] private Transform[] coinSpawPoint;
     
     private Vector3 position = new Vector3(3.27f, 7.73f, -0.28f);
 

@@ -1,3 +1,4 @@
+using Coin;
 using Grid;
 using PlayingField;
 using UI;
@@ -20,6 +21,9 @@ namespace Installer
                 .Install(Container);
             
             GridInstaller
+                .Install(Container);
+            
+            CoinInstaller
                 .Install(Container);
             
             Container
