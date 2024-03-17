@@ -6,10 +6,9 @@ namespace DragController.MouseController
 {
     public class MouseDragController : BaseDragController
     {
-        public float raycastDistance = 1000f;  
-        protected Vector3 worldTouchPosition;
+        private const int Distance = 1000;
         
-        private RaycastHit2D _hit;
+        private RaycastHit _hit;
         
         public MouseDragController(
             CameraController cameraController, 
@@ -23,32 +22,49 @@ namespace DragController.MouseController
             base.Tick();
             if (raycastInteractionIsActive)
             {
-                worldTouchPosition = mainCamera.ScreenToWorldPoint(Input.mousePosition);
                 if (Input.GetMouseButton(0))
                 {
                     TouchLogic();
                 }
+                else
+                {
+                    OnEndRaycastHit();
+                }
             }
         }
 
-        public override void OnStartRaycastHit(RaycastHit2D hits)
+        public override void OnStartRaycastHit(object hits)
         {
-            throw new System.NotImplementedException();
+            if (!coinView)
+            {
+                coinView = _hit.transform.GetComponent<CoinView>();
+            }
+            else
+            {
+                float deltaX = Input.GetAxis("Mouse X");
+                float deltaY = Input.GetAxis("Mouse Y");
+                
+                Vector3 newPosition = _hit.transform.position + new Vector3(deltaX, deltaY, 0);
+                
+                coinView.transform.position = newPosition;
+            }
         }
 
         protected override void TouchLogic()
         {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-            
-            if (Physics.Raycast(ray, out hit, Mathf.Infinity))
+            var ray = mainCamera.ScreenPointToRay(Input.mousePosition);
+
+            if (Physics.Raycast(ray, out _hit, Distance))
             {
-                Debug.Log("Попал в объект: " + hit.transform.name);
-                
-                // Добавь здесь свой код для обработки столкновения луча с объектом
+                Debug.Log("Попал в объект: " + _hit.transform.name);
+                if (_hit.collider.GetComponentInChildren<CoinView>())
+                {
+                    if (_hit.transform != null)
+                    {
+                        OnStartRaycastHit(_hit);
+                    }
+                }
             }
-            
-            Debug.DrawRay(ray.origin,ray.direction, Color.green);
         }
     }
 }

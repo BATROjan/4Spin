@@ -10,7 +10,7 @@ namespace DragController
         public event Action<CoinView, Component> OnPickupItemEvent;
 
         protected Camera mainCamera;
-        protected CoinView interactableView;
+        protected CoinView coinView;
 
         protected bool raycastInteractionIsActive;
         protected bool isDrag;
@@ -38,7 +38,7 @@ namespace DragController
             }
         }
 
-        public abstract void OnStartRaycastHit(RaycastHit2D hits);
+        public abstract void OnStartRaycastHit(object hits);
         protected abstract void TouchLogic();
 
         protected void OnTriggerEnter(Collider2D triggerData)
@@ -53,7 +53,7 @@ namespace DragController
 
         public void OnEndRaycastHit()
         {
-            interactableView = null;
+            coinView = null;
             isDrag = false;
         }
 

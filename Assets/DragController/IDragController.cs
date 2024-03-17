@@ -6,7 +6,7 @@ namespace DragController
     public interface IDragController
     {
         event Action<CoinView, Component> OnPickupItemEvent;
-        void OnStartRaycastHit(RaycastHit2D hits);
+        void OnStartRaycastHit(object hits);
         void OnEndRaycastHit();
         void StartRaycastInteraction();
         void StopRaycastInteraction();
