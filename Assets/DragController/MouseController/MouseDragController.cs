@@ -33,20 +33,15 @@ namespace DragController.MouseController
             }
         }
 
-        public override void OnStartRaycastHit(object hits)
+        public override void OnStartRaycastHit(object hit)
         {
             if (!coinView)
             {
-                coinView = _hit.transform.GetComponent<CoinView>();
+                coinView = ((RaycastHit)hit).transform.GetComponent<CoinView>();
             }
             else
             {
-                float deltaX = Input.GetAxis("Mouse X");
-                float deltaY = Input.GetAxis("Mouse Y");
-                
-                Vector3 newPosition = _hit.transform.position + new Vector3(deltaX, deltaY, 0);
-                
-                coinView.transform.position = newPosition;
+                coinView.transform.position = new Vector3(((RaycastHit)hit).point.x,((RaycastHit)hit).point.y,0);
             }
         }
 
