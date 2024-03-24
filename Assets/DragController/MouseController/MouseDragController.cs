@@ -17,31 +17,23 @@ namespace DragController.MouseController
         {
         }
 
-        public override void Tick()
-        {
-            base.Tick();
-            if (raycastInteractionIsActive)
-            {
-                if (Input.GetMouseButton(0))
-                {
-                    TouchLogic();
-                }
-                else
-                {
-                    OnEndRaycastHit();
-                }
-            }
-        }
-
         public override void OnStartRaycastHit(object hit)
         {
             if (!coinView)
             {
                 coinView = ((RaycastHit)hit).transform.GetComponent<CoinView>();
+                if (coinView)
+                { 
+                coinView.gameObject.layer = 3;
+                Debug.Log("AAAAAAAA");
+                
+                }
             }
             else
             {
-                coinView.transform.position = new Vector3(((RaycastHit)hit).point.x,((RaycastHit)hit).point.y,0);
+                coinView.transform.position = ((RaycastHit)hit).point;
+                Debug.Log("BBBBBB");
+
             }
         }
 
@@ -49,15 +41,13 @@ namespace DragController.MouseController
         {
             var ray = mainCamera.ScreenPointToRay(Input.mousePosition);
 
-            if (Physics.Raycast(ray, out _hit, Distance))
+            if (Physics.Raycast(ray, out _hit, Distance, 3))
             {
-                Debug.Log("Попал в объект: " + _hit.transform.name);
-                if (_hit.collider.GetComponentInChildren<CoinView>())
+                if (_hit.transform)
                 {
-                    if (_hit.transform != null)
-                    {
-                        OnStartRaycastHit(_hit);
-                    }
+                    Debug.Log("Попал в объект: " + _hit.transform.name);
+                    
+                    OnStartRaycastHit(_hit);
                 }
             }
         }

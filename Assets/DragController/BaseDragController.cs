@@ -36,6 +36,18 @@ namespace DragController
                 mainCamera = _cameraController.GetCameraView().MainCamera;
                 return;
             }
+
+            if (raycastInteractionIsActive)
+            {
+                if (Input.GetMouseButton(0))
+                {
+                    TouchLogic();
+                }
+                else
+                {
+                    OnEndRaycastHit();
+                }
+            }
         }
 
         public abstract void OnStartRaycastHit(object hits);
@@ -53,8 +65,12 @@ namespace DragController
 
         public void OnEndRaycastHit()
         {
-            coinView = null;
-            isDrag = false;
+            if (coinView)
+            {
+                coinView.gameObject.layer = 0;
+                coinView = null;
+                isDrag = false;
+            }
         }
 
         public void StartRaycastInteraction()

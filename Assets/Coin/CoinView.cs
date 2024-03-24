@@ -7,6 +7,8 @@ using Zenject;
 
 public class CoinView : MonoBehaviour
 {
+    public Vector3 CellTransformPosition;
+    
     [SerializeField] private MeshRenderer meshRenderer;
     private void ReInit(CoinModel coinModel)
     {

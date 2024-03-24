@@ -130,6 +130,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c682eeff73a065241ade8f5a8f8676b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cylinder: {fileID: 0}
+  left: {fileID: 0}
+  right: {fileID: 0}
+  colums: {fileID: 0}
+  coinSpawPoint: []
 --- !u!1 &2898632250695610667
 GameObject:
   m_ObjectHideFlags: 0
@@ -141,6 +146,7 @@ GameObject:
   - component: {fileID: 1174734508859178945}
   - component: {fileID: 7615639056640952671}
   - component: {fileID: 2068879237996123520}
+  - component: {fileID: 7985548588967327562}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -213,6 +219,19 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &7985548588967327562
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2898632250695610667}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.015811749, y: 0.03292683, z: 0.012926836}
+  m_Center: {x: 0.0020941256, y: -4.020627e-16, z: 0.0035365804}
 --- !u!1 &4567799585876504382
 GameObject:
   m_ObjectHideFlags: 0
