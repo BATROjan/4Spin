@@ -67,9 +67,14 @@ namespace DragController
         {
             if (coinView)
             {
-                if (coinView.CellTransformPosition != Vector3.zero)
+                if (!coinView.CellView)
                 {
-                    coinView.transform.position = coinView.CellTransformPosition;
+                    coinView.transform.localPosition = coinView.GetCellPosition();
+                }
+                else
+                {
+                    coinView.transform.SetParent(coinView.CellView.transform);
+                    coinView.transform.localPosition = Vector3.zero;
                 }
                 coinView.gameObject.layer = 0;
                 coinView = null;

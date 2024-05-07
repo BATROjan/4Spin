@@ -8,17 +8,19 @@ namespace Grid.Cell
     {
         private void OnTriggerEnter(Collider other)
         {
-            other.GetComponent<CoinView>().CellTransformPosition = transform.position;
+            var coin = other.GetComponent<CoinView>();
+                coin.TargetTransformCellPosition(transform.position);
+                coin.CellView = this;
         }
 
         private void OnTriggerExit(Collider other)
         {
-            other.GetComponent<CoinView>().CellTransformPosition = Vector3.zero;
+            var coin = other.GetComponent<CoinView>();
+            coin.TargetTransformCellPosition(Vector3.zero);
+            coin.CellView = null;
         }
 
         public class  Pool : MonoMemoryPool<CellView>
-        {
-            
-        }
+        { }
     }
 }

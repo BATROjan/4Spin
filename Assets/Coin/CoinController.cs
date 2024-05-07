@@ -18,6 +18,7 @@ public class CoinController
    public CoinView SpawnCoin(int id)
    {
       var coinView = _coinPool.Spawn(_coinConfig.GetCoinModel(id));
+      coinView.CellTransformCellPosition(coinView.transform.position);
       return coinView;
    }
 }
