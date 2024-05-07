@@ -1,4 +1,5 @@
 using UI.UILevelSelectWindow;
+using UI.UIPlayingWindow;
 using UI.UIService;
 using UI.UIStartWindow;
 using Zenject;
@@ -13,6 +14,9 @@ namespace UI
                 .Install(Container);
             
             UIselectWindowInstaller
+                .Install(Container);
+            
+            UIPlayingWindowInstaller
                 .Install(Container);
             
             Container.Bind<IUIRoot>()

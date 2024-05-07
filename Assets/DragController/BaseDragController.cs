@@ -1,5 +1,9 @@
 using System;
+using Grid;
 using MainCamera;
+using PlayingField;
+using UI.UIPlayingWindow;
+using UI.UIService;
 using UnityEngine;
 using Zenject;
 
@@ -11,19 +15,29 @@ namespace DragController
 
         protected Camera mainCamera;
         protected CoinView coinView;
-
-        protected bool raycastInteractionIsActive;
-        protected bool isDrag;
+        protected ColumVew columVew;
         
+        protected bool raycastInteractionIsActive;
+        protected bool isReadyToSpin;
+
+        private readonly UIPlayingWindowController _uiPlayingWindowController;
+        private readonly GridController _gridController;
+        private readonly PlayingFieldController _playingFieldController;
         private readonly CameraController _cameraController;
         private readonly TickableManager _tickableManager;
         
         private Collider2D _currentTriggerData;
 
         protected BaseDragController(
+            UIPlayingWindowController uiPlayingWindowController,
+            GridController gridController,
+            PlayingFieldController playingFieldController,
             CameraController cameraController,
             TickableManager tickableManager)
         {
+            _uiPlayingWindowController = uiPlayingWindowController;
+            _gridController = gridController;
+            _playingFieldController = playingFieldController;
             _cameraController = cameraController;
             _tickableManager = tickableManager;
             _tickableManager.Add(this);
@@ -31,7 +45,7 @@ namespace DragController
 
         public virtual void Tick()
         {
-            if (mainCamera == null)
+            if (!mainCamera)
             {
                 mainCamera = _cameraController.GetCameraView().MainCamera;
                 return;
@@ -73,12 +87,19 @@ namespace DragController
                 }
                 else
                 {
-                    coinView.transform.SetParent(coinView.CellView.transform);
-                    coinView.transform.localPosition = Vector3.zero;
+                    if (!isReadyToSpin)
+                    {
+                        coinView.transform.SetParent(coinView.CellView.transform);
+                        coinView.transform.localPosition = Vector3.zero;
+                        _playingFieldController.SetActiveArrows(true);
+                        _playingFieldController.SetActiveCoins(true);
+                        _gridController.SetActiveColums(true);
+                        isReadyToSpin = true;
+                    }
                 }
+
                 coinView.gameObject.layer = 0;
                 coinView = null;
-                isDrag = false;
             }
         }
 

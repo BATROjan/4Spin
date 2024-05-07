@@ -1,3 +1,4 @@
+using UI.UIPlayingWindow;
 using UI.UIService;
 
 namespace UI.UILevelSelectWindow
@@ -27,6 +28,8 @@ namespace UI.UILevelSelectWindow
         private void SelectLevel()
         {
             _uiService.Hide<UIlevelSelectWindow>();
+            _uiService.Show<UIPlayingWindowView>();
+            
             _gameController.StartGame();
             UISubscribeButtons();
         }

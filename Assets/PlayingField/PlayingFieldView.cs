@@ -7,17 +7,22 @@ using Zenject;
 public class PlayingFieldView : MonoBehaviour
 {
     public Transform Colums => colums;
-    public Transform[] CoinSpawPoint => coinSpawPoint;
+    public CoinSpawnView[] CoinSpawPoint => coinSpawPoint;
     
     [SerializeField] private GameObject cylinder;
     [SerializeField] private GameObject left;
     [SerializeField] private GameObject right;
     
     [SerializeField] private Transform colums;
-    [SerializeField] private Transform[] coinSpawPoint;
+    [SerializeField] private CoinSpawnView[] coinSpawPoint;
+    [SerializeField] private GameObject[] arrows;
     
     private Vector3 position = new Vector3(3.27f, 7.73f, -0.28f);
 
+    public GameObject[] GetArrows()
+    {
+        return arrows;
+    }
     private void ReInit(PlayingFieldModel item)
     {
         cylinder.transform.position = item.CylindrTransfom.position;

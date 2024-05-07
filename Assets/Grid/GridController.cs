@@ -54,8 +54,16 @@ namespace Grid
                     Vector3 spawnPoint = new Vector3(0, j * -2.5f, 0);
                     coin.CoinPosition.position = spawnPoint;
                     coin.CellTransformCellPosition(spawnPoint);
-                    coin.transform.SetParent(_playingFieldView.CoinSpawPoint[i], false);
+                    coin.transform.SetParent(_playingFieldView.CoinSpawPoint[i].transform, false);
                 }
+            }
+        }
+
+        public void SetActiveColums(bool value)
+        {
+            foreach (var colum in _columViewsList)
+            {
+                colum.BoxCollider.enabled = value;
             }
         }
 
@@ -67,7 +75,7 @@ namespace Grid
 
                 for (int j = 0; j < _currentGridModel.lineCount; j++)
                 {
-                    var cellPosition = _firstPosition + 3.8f * new Vector3(i, j, 0);
+                    var cellPosition = _firstPosition + 3.8f * new Vector3(0, j, 0);
                     var newCell = _cellViewPool.Spawn();
 
                     newCell.transform.position = cellPosition;
@@ -89,6 +97,7 @@ namespace Grid
             {
                 var columPosition = _firstPosition + 3.8f * new Vector3(i, 0, 0);
                 var colum = _columViewPool.Spawn();
+                colum.ColumTranform.position = columPosition;
                 _columViewsList.Add(colum);
             }
             foreach (var colum in _columViewsList)

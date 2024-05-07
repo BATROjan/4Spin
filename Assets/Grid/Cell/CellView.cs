@@ -9,15 +9,21 @@ namespace Grid.Cell
         private void OnTriggerEnter(Collider other)
         {
             var coin = other.GetComponent<CoinView>();
+            if (coin)
+            {
                 coin.TargetTransformCellPosition(transform.position);
                 coin.CellView = this;
+            }
         }
 
         private void OnTriggerExit(Collider other)
         {
             var coin = other.GetComponent<CoinView>();
-            coin.TargetTransformCellPosition(Vector3.zero);
-            coin.CellView = null;
+            if (coin)
+            {
+                coin.TargetTransformCellPosition(Vector3.zero);
+                coin.CellView = null;
+            }
         }
 
         public class  Pool : MonoMemoryPool<CellView>

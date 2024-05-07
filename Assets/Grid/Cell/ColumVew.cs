@@ -5,6 +5,8 @@ using Zenject;
 
 public class ColumVew : MonoBehaviour
 {
+    public Transform ColumTranform;
+    public BoxCollider BoxCollider;
     public class  Pool : MonoMemoryPool<ColumVew>
     {
             

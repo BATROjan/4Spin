@@ -1,4 +1,7 @@
+using Grid;
 using MainCamera;
+using PlayingField;
+using UI.UIPlayingWindow;
 using UnityEngine;
 using Zenject;
 
@@ -6,34 +9,51 @@ namespace DragController.MouseController
 {
     public class MouseDragController : BaseDragController
     {
+        private readonly UIPlayingWindowController _uiPlayingWindowController;
         private const int Distance = 1000;
         
         private RaycastHit _hit;
         
         public MouseDragController(
+            UIPlayingWindowController uiPlayingWindowController,
+            GridController gridController,
+            PlayingFieldController playingFieldController,
             CameraController cameraController, 
             TickableManager tickableManager) 
-            : base(cameraController, tickableManager)
+            : base(
+                uiPlayingWindowController,
+                gridController,
+                playingFieldController, 
+                cameraController,
+                tickableManager)
         {
+            _uiPlayingWindowController = uiPlayingWindowController;
         }
 
         public override void OnStartRaycastHit(object hit)
         {
-            if (!coinView)
+            if (!isReadyToSpin)
             {
-                coinView = ((RaycastHit)hit).transform.GetComponent<CoinView>();
-                if (coinView)
-                { 
-                coinView.gameObject.layer = 3;
-                Debug.Log("AAAAAAAA");
-                
+                if (!coinView)
+                {
+                    coinView = ((RaycastHit)hit).transform.GetComponent<CoinView>();
+                    if (coinView)
+                    {
+                        coinView.gameObject.layer = 3;
+                    }
+                }
+                else
+                {
+                    coinView.transform.position = ((RaycastHit)hit).point;
                 }
             }
             else
             {
-                coinView.transform.position = ((RaycastHit)hit).point;
-                Debug.Log("BBBBBB");
-
+                if (!columVew)
+                {
+                    columVew = ((RaycastHit)hit).transform.GetComponent<ColumVew>();
+                    _uiPlayingWindowController.ActivateSliderPanel(true);
+                }
             }
         }
 
