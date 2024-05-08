@@ -1,4 +1,5 @@
-﻿using Zenject;
+﻿using Slider;
+using Zenject;
 
 namespace UI.UIPlayingWindow
 {
@@ -8,6 +9,11 @@ namespace UI.UIPlayingWindow
         {
             Container
                 .Bind<UIPlayingWindowController>()
+                .AsSingle()
+                .NonLazy();
+            
+            Container
+                .Bind<SliderController>()
                 .AsSingle()
                 .NonLazy();
         }

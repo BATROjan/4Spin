@@ -17,7 +17,7 @@ public class PlayingFieldView : MonoBehaviour
     [SerializeField] private CoinSpawnView[] coinSpawPoint;
     [SerializeField] private GameObject[] arrows;
     
-    private Vector3 position = new Vector3(3.27f, 7.73f, -0.28f);
+    private Vector3 position = new Vector3(7.5f, 9.8f, 0f);
 
     public GameObject[] GetArrows()
     {

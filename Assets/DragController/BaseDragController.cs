@@ -2,6 +2,7 @@ using System;
 using Grid;
 using MainCamera;
 using PlayingField;
+using Slider;
 using UI.UIPlayingWindow;
 using UI.UIService;
 using UnityEngine;
@@ -20,6 +21,7 @@ namespace DragController
         protected bool raycastInteractionIsActive;
         protected bool isReadyToSpin;
 
+        private readonly SliderController _sliderController;
         private readonly UIPlayingWindowController _uiPlayingWindowController;
         private readonly GridController _gridController;
         private readonly PlayingFieldController _playingFieldController;
@@ -39,6 +41,9 @@ namespace DragController
             _gridController = gridController;
             _playingFieldController = playingFieldController;
             _cameraController = cameraController;
+
+            _gridController.OnSpinningIsDone += ClearAll;
+            
             _tickableManager = tickableManager;
             _tickableManager.Add(this);
         }
@@ -92,7 +97,7 @@ namespace DragController
                         coinView.transform.SetParent(coinView.CellView.transform);
                         coinView.transform.localPosition = Vector3.zero;
                         _playingFieldController.SetActiveArrows(true);
-                        _playingFieldController.SetActiveCoins(true);
+                        _playingFieldController.SetActiveCoins(false);
                         _gridController.SetActiveColums(true);
                         isReadyToSpin = true;
                     }
@@ -101,6 +106,14 @@ namespace DragController
                 coinView.gameObject.layer = 0;
                 coinView = null;
             }
+        }
+
+        public void ClearAll()
+        {
+            coinView = null;
+            columVew = null;
+            isReadyToSpin = false;
+            
         }
 
         public void StartRaycastInteraction()

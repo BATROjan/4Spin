@@ -1,6 +1,7 @@
 using Grid;
 using MainCamera;
 using PlayingField;
+using Slider;
 using UI.UIPlayingWindow;
 using UnityEngine;
 using Zenject;
@@ -10,6 +11,8 @@ namespace DragController.MouseController
     public class MouseDragController : BaseDragController
     {
         private readonly UIPlayingWindowController _uiPlayingWindowController;
+        private readonly GridController _gridController;
+        private readonly PlayingFieldController _playingFieldController;
         private const int Distance = 1000;
         
         private RaycastHit _hit;
@@ -28,6 +31,8 @@ namespace DragController.MouseController
                 tickableManager)
         {
             _uiPlayingWindowController = uiPlayingWindowController;
+            _gridController = gridController;
+            _playingFieldController = playingFieldController;
         }
 
         public override void OnStartRaycastHit(object hit)
@@ -52,6 +57,8 @@ namespace DragController.MouseController
                 if (!columVew)
                 {
                     columVew = ((RaycastHit)hit).transform.GetComponent<ColumVew>();
+                    _gridController.CurrentColum = columVew;
+                    _playingFieldController.SetActiveArrows(false);
                     _uiPlayingWindowController.ActivateSliderPanel(true);
                 }
             }

@@ -8,6 +8,7 @@ namespace DragController
         event Action<CoinView, Component> OnPickupItemEvent;
         void OnStartRaycastHit(object hits);
         void OnEndRaycastHit();
+        void ClearAll();
         void StartRaycastInteraction();
         void StopRaycastInteraction();
     }

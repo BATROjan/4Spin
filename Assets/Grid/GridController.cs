@@ -1,12 +1,19 @@
+using System;
 using System.Collections.Generic;
+using DG.Tweening;
 using Grid.Cell;
 using PlayingField;
+using Slider;
 using UnityEngine;
 
 namespace Grid
 {
     public class  GridController
     {
+        public ColumVew CurrentColum;
+        public Action OnSpinningIsDone;
+        
+        private readonly SliderController _sliderController;
         private readonly CoinController _coinController;
         private readonly PlayingFieldController _playingFieldController;
         private readonly ColumVew.Pool _columViewPool;
@@ -16,12 +23,13 @@ namespace Grid
         private List<CellView> _cellViewsList = new List<CellView>();
         private List<ColumVew> _columViewsList = new List<ColumVew>();
 
-        private Vector3 _firstPosition = Vector3.zero;
+        private Vector3 _firstColumPosition = new Vector3(-5.6f,0,0);
+        private Vector3 _firstCellPosition = new Vector3(0,-9.58f,0);
 
         private GridModel _currentGridModel;
         private PlayingFieldView _playingFieldView;
 
-        public GridController(
+        public GridController(SliderController sliderController,
             CoinController coinController,
             PlayingFieldController playingFieldController,
             ColumVew.Pool columViewPool,
@@ -29,11 +37,14 @@ namespace Grid
             GridConfig gridConfig
         )
         {
+            _sliderController = sliderController;
             _coinController = coinController;
             _playingFieldController = playingFieldController;
             _columViewPool = columViewPool;
             _cellViewPool = cellViewPool;
             _gridConfig = gridConfig;
+
+            _sliderController.GetSliderView().UIButtons[0].OnClick += SpinColum;
         }
 
         public void SpawnGrid()
@@ -67,6 +78,16 @@ namespace Grid
             }
         }
 
+        public void SpinColum()
+        {
+            CurrentColum.transform.DORotate(new Vector3(720, 0, 0), 5f, RotateMode.LocalAxisAdd)
+                .OnComplete(()=>
+                {
+                    _playingFieldController.SetActiveCoins(true);
+                    OnSpinningIsDone?.Invoke();
+                });
+        }
+
         private void SpawnCell()
         {
             for (int i = 0; i < _currentGridModel.columnCount; i++)
@@ -75,7 +96,7 @@ namespace Grid
 
                 for (int j = 0; j < _currentGridModel.lineCount; j++)
                 {
-                    var cellPosition = _firstPosition + 3.8f * new Vector3(0, j, 0);
+                    var cellPosition = _firstCellPosition + 3.8f * new Vector3(0, j, 0);
                     var newCell = _cellViewPool.Spawn();
 
                     newCell.transform.position = cellPosition;
@@ -95,14 +116,14 @@ namespace Grid
         {
             for (int i = 0; i < _currentGridModel.columnCount; i++)
             {
-                var columPosition = _firstPosition + 3.8f * new Vector3(i, 0, 0);
+                var columPosition = _firstColumPosition + 3.8f * new Vector3(i, 0, 0);
                 var colum = _columViewPool.Spawn();
                 colum.ColumTranform.position = columPosition;
                 _columViewsList.Add(colum);
             }
             foreach (var colum in _columViewsList)
             {
-                colum.transform.SetParent(_playingFieldView.Colums);
+                colum.transform.SetParent(_playingFieldView.Colums, false);
             }
         }
     }

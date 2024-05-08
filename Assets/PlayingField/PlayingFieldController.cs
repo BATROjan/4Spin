@@ -37,7 +37,7 @@ namespace PlayingField
         {
             foreach (var spawnView in _playingFieldView.CoinSpawPoint)
             {
-                if (!value)
+                if (value)
                 {
                     spawnView.transform.DOLocalMove(spawnView.GetShowPosition(), _animationTime);
                 }

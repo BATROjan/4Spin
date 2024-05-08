@@ -31,10 +31,10 @@ namespace UI.UILevelSelectWindow
             _uiService.Show<UIPlayingWindowView>();
             
             _gameController.StartGame();
-            UISubscribeButtons();
+            UnSubscribeButtons();
         }
         
-        public void UISubscribeButtons()
+        public void UnSubscribeButtons()
         {
             _uiSelectWindow.Buttons[1].OnClick -= SelectLevel;
         }
