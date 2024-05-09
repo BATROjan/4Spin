@@ -72,8 +72,6 @@ namespace DragController.MouseController
             {
                 if (_hit.transform)
                 {
-                    Debug.Log("Попал в объект: " + _hit.transform.name);
-                    
                     OnStartRaycastHit(_hit);
                 }
             }

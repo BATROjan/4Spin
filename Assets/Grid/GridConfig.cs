@@ -48,6 +48,7 @@ public struct GridModel
     public DiffcultLevel diffcultLevel;
     public int columnCount;
     public int lineCount;
+    public int CountCellsToWin;
 }
 
 public enum DiffcultLevel

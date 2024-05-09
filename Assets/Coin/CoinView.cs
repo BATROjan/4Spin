@@ -1,10 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using Coin;
 using Grid.Cell;
-using Unity.Collections.LowLevel.Unsafe;
 using UnityEngine;
-using UnityEngine.Serialization;
 using Zenject;
 
 public class CoinView : MonoBehaviour

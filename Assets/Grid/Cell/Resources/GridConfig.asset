@@ -12,14 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a6727d2df7d4ee2bee0984b377794e2, type: 3}
   m_Name: GridConfig
   m_EditorClassIdentifier: 
+  offset: 3.8
   gridModels:
   - diffcultLevel: 0
     columnCount: 3
     lineCount: 4
+    CountCellsToWin: 2
   - diffcultLevel: 1
     columnCount: 4
     lineCount: 6
+    CountCellsToWin: 3
   - diffcultLevel: 2
     columnCount: 5
     lineCount: 8
-  offset: 3.8
+    CountCellsToWin: 4
