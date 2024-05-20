@@ -1,11 +1,14 @@
-﻿using DG.Tweening;
-using UnityEngine;
+﻿using System;
+using DG.Tweening;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 namespace Slider
 {
     public class SliderController
     {
+        public Action OnGetReadyToSpin;
+        
         private SliderView _sliderView;
         private float _animationTime = 0.2f;
         
@@ -34,7 +37,7 @@ namespace Slider
             if (value)
             {
                 InitButtons();
-                StartRandomValue();
+                SetStartValue();
 
                 _sliderView.transform.DOLocalMove(_sliderView.Positions[0], _animationTime)
                     .OnComplete(() => StartSliding(_startBoolValue));
@@ -53,14 +56,23 @@ namespace Slider
           
           if (value)
           {
-              _animationTween = _sliderView.SliderImage.DOFillAmount(1, 0.5f)
+              _animationTween = _sliderView.SliderImage.DOFillAmount(1, 1)
                   .OnComplete(() => StartSliding(!value));
           }
           else
           {
-              _animationTween = _sliderView.SliderImage.DOFillAmount(0, 0.5f)
+              _animationTween = _sliderView.SliderImage.DOFillAmount(0, 1)
                   .OnComplete(() => StartSliding(!value));
           }
+        }
+
+        public float GetSliderValue()
+        {
+            if (_currentSliderValue < 1)
+            {
+                _currentSliderValue = Random.Range(2,4);
+            }
+            return _currentSliderValue;
         }
 
         private void InitButtons()
@@ -70,10 +82,13 @@ namespace Slider
 
         private void CheckSliderValue()
         {
-            _currentSliderValue = _sliderView.SliderImage.fillAmount;
+            _currentSliderValue = _sliderView.SliderImage.fillAmount * 10;
             _animationTween.Kill();
             _animationTween = null;
+            
             ShowAnimation(false);
+            OnGetReadyToSpin?.Invoke();
+            
             UnSubscribeButtons();
         }
         
@@ -82,19 +97,10 @@ namespace Slider
             _sliderView.UIButtons[0].OnClick -= CheckSliderValue;
         }
 
-        private void StartRandomValue()
+        private void SetStartValue()
         {
-            _startFloatValue = Random.Range(0.0f, 1.0f);
-            _sliderView.SliderImage.fillAmount = _startFloatValue;
-            
-            if (_startFloatValue>= 0.5f)
-            {
-                _startBoolValue = true;
-            }
-            else
-            {
-                _startBoolValue = false;
-            }
+            _startFloatValue = 2.5f;
+            _sliderView.SliderImage.fillAmount = _startFloatValue/5;
         }
     }
 }

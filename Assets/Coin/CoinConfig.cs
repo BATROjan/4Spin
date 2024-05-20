@@ -22,5 +22,6 @@ namespace Coin
     {
         public Material Material;
         public Color Color;
+        public int NumberComand;
     }
 }

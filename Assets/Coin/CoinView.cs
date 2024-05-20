@@ -7,6 +7,7 @@ public class CoinView : MonoBehaviour
 {
     public CellView CellView;
     public Transform CoinPosition;
+    public int NumberComand;
     
     private Vector3 _targetTransformPosition;
     private Vector3 _cellTransformPosition;
@@ -34,6 +35,7 @@ public class CoinView : MonoBehaviour
     private void ReInit(CoinModel coinModel)
     {
         meshRenderer.material = coinModel.Material;
+        NumberComand = coinModel.NumberComand;
     }
     
     public class Pool: MonoMemoryPool<CoinModel, CoinView>

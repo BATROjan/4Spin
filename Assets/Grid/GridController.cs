@@ -5,6 +5,7 @@ using Grid.Cell;
 using PlayingField;
 using Slider;
 using UnityEngine;
+using Random = System.Random;
 
 namespace Grid
 {
@@ -23,7 +24,8 @@ namespace Grid
         private List<CellView> _cellViewsList = new List<CellView>();
         private List<ColumVew> _columViewsList = new List<ColumVew>();
 
-        private Dictionary<int, List<CellView>> _dictionaryOfColums = new Dictionary<int, List<CellView>>();
+        private Dictionary<int, ColumVew> _dictionaryOfColums = new Dictionary<int, ColumVew>();
+        private Dictionary<ColumVew, List<CellView>> _dictionaryOfCells = new Dictionary<ColumVew, List<CellView>>();
         
         private Vector3 _firstColumPosition = new Vector3(-5.6f,0,0);
         private Vector3 _firstCellPosition = new Vector3(0,-9.58f,0);
@@ -31,6 +33,9 @@ namespace Grid
         private GridModel _currentGridModel;
         private PlayingFieldView _playingFieldView;
         private CellView[,] _cellViews;
+
+        private int _currentNumberComand;
+        private int _currentCoinLeght = 0;
         
         public GridController(SliderController sliderController,
             CoinController coinController,
@@ -47,7 +52,7 @@ namespace Grid
             _cellViewPool = cellViewPool;
             _gridConfig = gridConfig;
 
-            _sliderController.GetSliderView().UIButtons[0].OnClick += SpinColum;
+            _sliderController.OnGetReadyToSpin += SpinColum;
         }
 
         public void SpawnGrid()
@@ -60,8 +65,8 @@ namespace Grid
             _cellViews = new CellView[_currentGridModel.lineCount, _currentGridModel.columnCount];
             
             SpawnColums();
-            
             SpawnCell();
+            
             for (int i = 0; i < 2; i++)
             {
                 for (int j = 0; j < 10; j++)
@@ -85,13 +90,32 @@ namespace Grid
 
         public void SpinColum()
         {
-            CurrentColum.transform.DORotate(new Vector3(720, 0, 0), 1f, RotateMode.LocalAxisAdd)
+            int xValue = (int)_sliderController.GetSliderValue()*180;
+            if ((int)_sliderController.GetSliderValue() % 2 != 0)
+            {
+                FlipColumn(CurrentColum.ColumID);
+            }
+    
+            Debug.Log("Random Angle = " + xValue);
+            CurrentColum.transform.DORotate(new Vector3(xValue, 0, 0), 3f, RotateMode.LocalAxisAdd)
                 .OnComplete(()=>
                 {
                     СheckAllCells();
                     _playingFieldController.SetActiveCoins(true);
                     OnSpinningIsDone?.Invoke();
                 });
+        }
+        
+        public void FlipColumn(int columnIndex)
+        {
+            int linesCount = _cellViews.GetLength(0);
+            
+            for (int i = 0; i < linesCount / 2; i++)
+            {
+                CellView temp = _cellViews[i, columnIndex];
+                _cellViews[i, columnIndex] = _cellViews[linesCount - i - 1, columnIndex];
+                _cellViews[linesCount - i - 1, columnIndex] = temp;
+            }
         }
 
         private void СheckAllCells()
@@ -102,58 +126,26 @@ namespace Grid
             CheckLeftDiagonals();
         }
 
-        private void CheckLeftDiagonals()
+        private void CheckLines()
         {
-            int currentCoinLeght = 0;
-          
-            for (int i = _currentGridModel.lineCount-1; i >= _currentGridModel.CountCellsToWin; i--)
+            for (int j = 0; j < _currentGridModel.lineCount; j++)
             {
-                int j = _currentGridModel.lineCount - i;
-                    
-                var coin = _cellViews[i, j].GetComponentInChildren<CoinView>();
-                if (coin)
+                _currentCoinLeght = 0;
+                for (int i = 0; i < _currentGridModel.columnCount; i++)
                 {
-                    currentCoinLeght++;
-                    if (currentCoinLeght == _currentGridModel.CountCellsToWin)
-                    {
-                        Debug.Log("Win");
-                    }
+                    CheckCell(j, i);
                 }
-                else
-                {
-                    currentCoinLeght = 0;
-                    Debug.Log("Loose");
-                }
-                
             }
-            
-            currentCoinLeght = 0;
-            
-            for (int f = 0; f < _currentGridModel.columnCount; f++)
+        }
+
+        private void CheckColums()
+        {
+            for (int i = 0; i < _currentGridModel.columnCount; i++)
             {
-                var offset = f;
-                
-                for (int i = _currentGridModel.lineCount - 1-offset; i >= 0; i--)
+                int currentCoinLeght = 0;
+                for (int j = 0; j < _currentGridModel.lineCount; j++)
                 {
-                    int j = _currentGridModel.lineCount - 1 - i- offset;
-                    
-                    if (j < _currentGridModel.columnCount)
-                    {
-                        var coin = _cellViews[i, j].GetComponentInChildren<CoinView>();
-                        if (coin)
-                        {
-                            currentCoinLeght++;
-                            if (currentCoinLeght == _currentGridModel.CountCellsToWin)
-                            {
-                                Debug.Log("Win");
-                            }
-                        }
-                        else
-                        {
-                            currentCoinLeght = 0;
-                            Debug.Log("Loose");
-                        }
-                    }
+                    CheckCell(j, i);
                 }
             }
         }
@@ -162,23 +154,10 @@ namespace Grid
         { 
             int currentCoinLeght = 0;
             
-            for (int i = 0 ; i < _currentGridModel.columnCount-1; i++)
+            for (int j = 0 ; j < _currentGridModel.columnCount-1; j++)
             {
-                int j = i + 1;
-                var coin = _cellViews[i,j].GetComponentInChildren<CoinView>();
-                if (coin)
-                {
-                    currentCoinLeght++;
-                    if (currentCoinLeght == _currentGridModel.CountCellsToWin)
-                    {
-                        Debug.Log("Win");
-                    }
-                }
-                else
-                {
-                    currentCoinLeght = 0;
-                    Debug.Log("Loose");
-                }
+                int i = j + 1;
+                CheckCell(j, i);
             }
             
             currentCoinLeght = 0;
@@ -191,72 +170,63 @@ namespace Grid
                     int j = i + offset;
                     if (j <= _currentGridModel.lineCount-1)
                     {
-                        var coin = _cellViews[j,i].GetComponentInChildren<CoinView>();
-                        if (coin)
-                        {
-                            currentCoinLeght++;
-                            if (currentCoinLeght == _currentGridModel.CountCellsToWin)
-                            {
-                                Debug.Log("Win");
-                            }
-                        }
-                        else
-                        {
-                            currentCoinLeght = 0;
-                            Debug.Log("Loose");
-                        }
+                        CheckCell(j, i);
                     }
                 } 
             }
         }
 
-        private void CheckColums()
+        private void CheckLeftDiagonals()
         {
-            for (int i = 0; i < _currentGridModel.columnCount; i++)
+            int currentCoinLeght = 0;
+          
+            for (int j = _currentGridModel.lineCount-1; j >= _currentGridModel.CountCellsToWin; j--)
             {
-                int currentCoinLeght = 0;
-                for (int j = 0; j < _currentGridModel.lineCount; j++)
+                int i = _currentGridModel.lineCount - j;
+
+                CheckCell(j, i);
+            }
+            
+            currentCoinLeght = 0;
+            
+            for (int f = 0; f < _currentGridModel.columnCount; f++)
+            {
+                var offset = f;
+                
+                for (int j = _currentGridModel.lineCount - 1-offset; j >= 0; j--)
                 {
-                    var coin = _cellViews[j, i].GetComponentInChildren<CoinView>();
-                    if (coin)
+                    int i = _currentGridModel.lineCount - 1 - j- offset;
+                    
+                    if (i < _currentGridModel.columnCount)
                     {
-                        currentCoinLeght++;
-                        if (currentCoinLeght == _currentGridModel.CountCellsToWin)
-                        {
-                            Debug.Log("Win");
-                        }
-                    }
-                    else
-                    {
-                        currentCoinLeght = 0;
-                        Debug.Log("Loose");
+                        CheckCell(j, i);
                     }
                 }
             }
         }
 
-        private void CheckLines()
+        private void CheckCell(int j, int i)
         {
-            for (int j = 0; j < _currentGridModel.lineCount; j++)
+            var coin = _cellViews[j, i].GetComponentInChildren<CoinView>();
+            if (coin)
             {
-                int currentCoinLeght = 0;
-                for (int i = 0; i < _currentGridModel.columnCount; i++)
+                if (coin.NumberComand == _currentNumberComand)
                 {
-                    var coin = _cellViews[j,i].GetComponentInChildren<CoinView>();
-                    if (coin)
+                    _currentCoinLeght++;
+                    if (_currentCoinLeght == _currentGridModel.CountCellsToWin)
                     {
-                        currentCoinLeght++;
-                        if (currentCoinLeght == _currentGridModel.CountCellsToWin)
-                        {
-                            Debug.Log("Win");
-                        }
-                    }
-                    else
-                    {
-                        currentCoinLeght = 0;
-                        Debug.Log("Loose");
+                        Debug.Log("Win" + coin.NumberComand + " comand");
                     }
                 }
+                if (coin.NumberComand != _currentNumberComand)
+                {
+                    _currentCoinLeght = 1;
+                    _currentNumberComand = coin.NumberComand;
+                }
+            }
+            else
+            {
+                _currentCoinLeght = 0;
             }
         }
 
@@ -277,6 +247,8 @@ namespace Grid
                     
                     someCurrentCells.Add(newCell);
                 }
+                
+                _dictionaryOfCells.Add(_dictionaryOfColums[i], someCurrentCells);
 
                 foreach (var cell in someCurrentCells)
                 {
@@ -291,7 +263,9 @@ namespace Grid
             {
                 var columPosition = _firstColumPosition + 3.8f * new Vector3(i, 0, 0);
                 var colum = _columViewPool.Spawn();
+                colum.ColumID = i;
                 colum.ColumTranform.position = columPosition;
+                _dictionaryOfColums.Add(i, colum);
                 _columViewsList.Add(colum);
             }
             foreach (var colum in _columViewsList)
