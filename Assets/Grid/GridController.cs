@@ -4,6 +4,11 @@ using DG.Tweening;
 using Grid.Cell;
 using PlayingField;
 using Slider;
+using UI;
+using UI.UIPlayingWindow;
+using UI.UIService;
+using UI.UIWinWindow;
+using Unity.VisualScripting;
 using UnityEngine;
 using Random = System.Random;
 
@@ -13,7 +18,8 @@ namespace Grid
     {
         public ColumVew CurrentColum;
         public Action OnSpinningIsDone;
-        
+
+        private readonly IUIService _uiService;
         private readonly SliderController _sliderController;
         private readonly CoinController _coinController;
         private readonly PlayingFieldController _playingFieldController;
@@ -31,13 +37,17 @@ namespace Grid
         private Vector3 _firstCellPosition = new Vector3(0,-9.58f,0);
 
         private GridModel _currentGridModel;
-        private PlayingFieldView _playingFieldView;
         private CellView[,] _cellViews;
+
+        private UIWinWindowView _uiWinWindowView;
+        private PlayingFieldView _playingFieldView;
 
         private int _currentNumberComand;
         private int _currentCoinLeght = 0;
         
-        public GridController(SliderController sliderController,
+        public GridController(
+            IUIService uiService,
+            SliderController sliderController,
             CoinController coinController,
             PlayingFieldController playingFieldController,
             ColumVew.Pool columViewPool,
@@ -45,6 +55,7 @@ namespace Grid
             GridConfig gridConfig
         )
         {
+            _uiService = uiService;
             _sliderController = sliderController;
             _coinController = coinController;
             _playingFieldController = playingFieldController;
@@ -53,6 +64,8 @@ namespace Grid
             _gridConfig = gridConfig;
 
             _sliderController.OnGetReadyToSpin += SpinColum;
+
+            _uiWinWindowView = _uiService.Get<UIWinWindowView>();
         }
 
         public void SpawnGrid()
@@ -67,6 +80,11 @@ namespace Grid
             SpawnColums();
             SpawnCell();
             
+            SpawnCoins();
+        }
+
+        public void SpawnCoins()
+        {
             for (int i = 0; i < 2; i++)
             {
                 for (int j = 0; j < 10; j++)
@@ -78,6 +96,20 @@ namespace Grid
                     coin.transform.SetParent(_playingFieldView.CoinSpawPoint[i].transform, false);
                 }
             }
+        }
+
+        public void ClearAll()
+        {
+            ClearDictionarys();
+        }
+
+        public void DespawnCoins()
+        {
+           _coinController.DespawnCoin(); 
+        }
+
+        private void ClearDictionarys()
+        {
         }
 
         public void SetActiveColums(bool value)
@@ -214,7 +246,11 @@ namespace Grid
                 {
                     _currentCoinLeght++;
                     if (_currentCoinLeght == _currentGridModel.CountCellsToWin)
-                    {
+                    { 
+                        _uiService.Show<UIWinWindowView>();
+                        _uiService.Hide<UIPlayingWindowView>();
+                        var text = "Win " + coin.NumberComand + " Comand";
+                        _uiWinWindowView.WinText.text = text;
                         Debug.Log("Win" + coin.NumberComand + " comand");
                     }
                 }

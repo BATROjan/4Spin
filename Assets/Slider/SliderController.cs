@@ -72,6 +72,11 @@ namespace Slider
             {
                 _currentSliderValue = Random.Range(2,4);
             }
+            if (_currentSliderValue == 10)
+            {
+                _currentSliderValue = Random.Range(9, 11);
+            }
+            
             return _currentSliderValue;
         }
 

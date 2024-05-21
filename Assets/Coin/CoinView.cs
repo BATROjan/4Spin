@@ -5,6 +5,7 @@ using Zenject;
 
 public class CoinView : MonoBehaviour
 {
+    public MeshRenderer MeshRenderer => meshRenderer;
     public CellView CellView;
     public Transform CoinPosition;
     public int NumberComand;
@@ -36,6 +37,10 @@ public class CoinView : MonoBehaviour
     {
         meshRenderer.material = coinModel.Material;
         NumberComand = coinModel.NumberComand;
+
+        transform.rotation = new Quaternion(0, 0, 0, 0);
+        transform.localScale = new Vector3(100, 100, 20);
+        CellView = null;
     }
     
     public class Pool: MonoMemoryPool<CoinModel, CoinView>
