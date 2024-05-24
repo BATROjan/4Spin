@@ -13,9 +13,6 @@ namespace DragController.MouseController
         private readonly UIPlayingWindowController _uiPlayingWindowController;
         private readonly GridController _gridController;
         private readonly PlayingFieldController _playingFieldController;
-        private const int Distance = 1000;
-        
-        private RaycastHit _hit;
         
         public MouseDragController(
             UIPlayingWindowController uiPlayingWindowController,
@@ -35,31 +32,19 @@ namespace DragController.MouseController
             _playingFieldController = playingFieldController;
         }
 
-        public override void OnStartRaycastHit(object hit)
+        public override void Tick()
         {
-            if (!isReadyToSpin)
+            base.Tick();
+            
+            if (raycastInteractionIsActive)
             {
-                if (!coinView)
+                if (Input.GetMouseButton(0))
                 {
-                    coinView = ((RaycastHit)hit).transform.GetComponent<CoinView>();
-                    if (coinView)
-                    {
-                        coinView.gameObject.layer = 3;
-                    }
+                    TouchLogic();
                 }
                 else
                 {
-                    coinView.transform.position = ((RaycastHit)hit).point;
-                }
-            }
-            else
-            {
-                if (!columVew)
-                {
-                    columVew = ((RaycastHit)hit).transform.GetComponent<ColumVew>();
-                    _gridController.CurrentColum = columVew;
-                    _playingFieldController.SetActiveArrows(false);
-                    _uiPlayingWindowController.ActivateSliderPanel(true);
+                    OnEndRaycastHit();
                 }
             }
         }
@@ -68,7 +53,7 @@ namespace DragController.MouseController
         {
             var ray = mainCamera.ScreenPointToRay(Input.mousePosition);
 
-            if (Physics.Raycast(ray, out _hit, Distance, 3))
+            if (Physics.Raycast(ray, out _hit, _distance, 3))
             {
                 if (_hit.transform)
                 {

@@ -18,6 +18,9 @@ namespace DragController
         protected CoinView coinView;
         protected ColumVew columVew;
         
+        protected RaycastHit _hit;
+        protected const int _distance = 1000;
+            
         protected bool raycastInteractionIsActive;
         protected bool isReadyToSpin;
 
@@ -53,23 +56,8 @@ namespace DragController
             if (!mainCamera)
             {
                 mainCamera = _cameraController.GetCameraView().MainCamera;
-                return;
-            }
-
-            if (raycastInteractionIsActive)
-            {
-                if (Input.GetMouseButton(0))
-                {
-                    TouchLogic();
-                }
-                else
-                {
-                    OnEndRaycastHit();
-                }
             }
         }
-
-        public abstract void OnStartRaycastHit(object hits);
         protected abstract void TouchLogic();
 
         protected void OnTriggerEnter(Collider2D triggerData)
@@ -80,6 +68,35 @@ namespace DragController
         protected void OnTriggerExit(Collider2D triggerData)
         {
             _currentTriggerData = null;
+        }
+
+        public void OnStartRaycastHit(object hit)
+        {
+            if (!isReadyToSpin)
+            {
+                if (!coinView)
+                {
+                    coinView = ((RaycastHit)hit).transform.GetComponent<CoinView>();
+                    if (coinView)
+                    {
+                        coinView.gameObject.layer = 3;
+                    }
+                }
+                else
+                {
+                    coinView.transform.position = ((RaycastHit)hit).point;
+                }
+            }
+            else
+            {
+                if (!columVew)
+                {
+                    columVew = ((RaycastHit)hit).transform.GetComponent<ColumVew>();
+                    _gridController.CurrentColum = columVew;
+                    _playingFieldController.SetActiveArrows(false);
+                    _uiPlayingWindowController.ActivateSliderPanel(true);
+                }
+            }
         }
 
         public void OnEndRaycastHit()
