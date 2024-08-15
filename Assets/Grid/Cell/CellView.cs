@@ -11,8 +11,8 @@ namespace Grid.Cell
             var coin = other.GetComponent<CoinView>();
             if (coin)
             {
-                coin.TargetTransformCellPosition(transform.position);
                 coin.CellView = this;
+                coin.TargetTransformCellPosition(transform.position);
             }
         }
 

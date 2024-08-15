@@ -29,6 +29,7 @@ namespace Grid
 
         private List<CellView> _cellViewsList = new List<CellView>();
         private List<ColumVew> _columViewsList = new List<ColumVew>();
+        private List<CoinView> _coinViewsList = new List<CoinView>();
 
         private Dictionary<int, ColumVew> _dictionaryOfColums = new Dictionary<int, ColumVew>();
         private Dictionary<ColumVew, List<CellView>> _dictionaryOfCells = new Dictionary<ColumVew, List<CellView>>();
@@ -83,6 +84,16 @@ namespace Grid
             SpawnCoins();
         }
 
+        public void ResetColumsRotation()
+        {
+            foreach (var columVew in _columViewsList)
+            {
+                var rotation = columVew.transform.rotation;
+                rotation.eulerAngles = Vector3.zero;
+                columVew.transform.rotation = rotation;
+            }
+        }
+
         public void SpawnCoins()
         {
             for (int i = 0; i < 2; i++)
@@ -91,9 +102,12 @@ namespace Grid
                 {
                     var coin = _coinController.SpawnCoin(i);
                     Vector3 spawnPoint = new Vector3(0, j * -2.5f, 0);
+                    
                     coin.CoinPosition.position = spawnPoint;
                     coin.CellTransformCellPosition(spawnPoint);
+                    coin.OnCellFill += SelectColum;
                     coin.transform.SetParent(_playingFieldView.CoinSpawPoint[i].transform, false);
+                    _coinViewsList.Add(coin);
                 }
             }
         }
@@ -105,6 +119,10 @@ namespace Grid
 
         public void DespawnCoins()
         {
+            foreach (var coin in _coinViewsList)
+            {
+                coin.OnCellFill -= SelectColum;
+            }
            _coinController.DespawnCoin(); 
         }
 
@@ -276,7 +294,6 @@ namespace Grid
                 {
                     var cellPosition = _firstCellPosition + 3.8f * new Vector3(0, j, 0);
                     var newCell = _cellViewPool.Spawn();
-
                     newCell.transform.position = cellPosition;
                     _cellViewsList.Add(newCell);
                     _cellViews[j, i] = newCell;
@@ -289,6 +306,22 @@ namespace Grid
                 foreach (var cell in someCurrentCells)
                 {
                     cell.transform.SetParent(_columViewsList[i].transform, false);
+                }
+            }
+        }
+        
+        private void SelectColum(CellView cellView)
+        {
+            foreach (var colum in _dictionaryOfCells)
+            {
+                foreach (var cell in colum.Value)
+                {
+                    if (cell == cellView)
+                    {
+                        CurrentColum = colum.Key;
+                        _sliderController.ShowAnimation(true);
+                        break;
+                    }
                 }
             }
         }

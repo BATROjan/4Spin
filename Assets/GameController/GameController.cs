@@ -34,8 +34,11 @@ namespace GameController
         {
             _uiService.Hide<UIWinWindowView>();
             _uiService.Show<UIPlayingWindowView>();
+            
             _gridController.DespawnCoins();
             _gridController.SpawnCoins();
+            
+            _gridController.ResetColumsRotation();
         }
     }
 }

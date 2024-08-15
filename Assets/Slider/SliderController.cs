@@ -1,5 +1,6 @@
 ﻿using System;
 using DG.Tweening;
+using UnityEngine;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
@@ -38,14 +39,16 @@ namespace Slider
             {
                 InitButtons();
                 SetStartValue();
-
-                _sliderView.transform.DOLocalMove(_sliderView.Positions[0], _animationTime)
+                var rect = _sliderView.GetComponent<RectTransform>();
+                
+                rect.DOAnchorPos(_sliderView.Positions[0], _animationTime)
                     .OnComplete(() => StartSliding(_startBoolValue));
             }
             else
             {
+                var rect = _sliderView.GetComponent<RectTransform>();
                 UnSubscribeButtons();
-                _sliderView.transform.DOLocalMove(_sliderView.Positions[1], _animationTime);
+                rect.DOAnchorPos(_sliderView.Positions[1], _animationTime);
             }
         }
 

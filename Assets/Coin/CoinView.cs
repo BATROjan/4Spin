@@ -1,3 +1,4 @@
+using System;
 using Coin;
 using Grid.Cell;
 using UnityEngine;
@@ -5,6 +6,7 @@ using Zenject;
 
 public class CoinView : MonoBehaviour
 {
+    public Action<CellView> OnCellFill;
     public MeshRenderer MeshRenderer => meshRenderer;
     public CellView CellView;
     public Transform CoinPosition;

@@ -87,16 +87,6 @@ namespace DragController
                     coinView.transform.position = ((RaycastHit)hit).point;
                 }
             }
-            else
-            {
-                if (!columVew)
-                {
-                    columVew = ((RaycastHit)hit).transform.GetComponent<ColumVew>();
-                    _gridController.CurrentColum = columVew;
-                    _playingFieldController.SetActiveArrows(false);
-                    _uiPlayingWindowController.ActivateSliderPanel(true);
-                }
-            }
         }
 
         public void OnEndRaycastHit()
@@ -112,10 +102,10 @@ namespace DragController
                     if (!isReadyToSpin)
                     {
                         coinView.transform.SetParent(coinView.CellView.transform);
+                        coinView.OnCellFill?.Invoke(coinView.CellView);
                         coinView.transform.localPosition = Vector3.zero;
-                        _playingFieldController.SetActiveArrows(true);
                         _playingFieldController.SetActiveCoins(false);
-                        _gridController.SetActiveColums(true);
+
                         isReadyToSpin = true;
                     }
                 }
