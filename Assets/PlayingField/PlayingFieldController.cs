@@ -25,27 +25,15 @@ namespace PlayingField
             return view;
         }
 
-        public void SetActiveArrows(bool value)
-        {
-            foreach (var arrow in _playingFieldView.GetArrows())
-            {
-                arrow.gameObject.SetActive(value);
-            }
-        }
-
         public void SetActiveCoins(bool value)
         {
-            foreach (var spawnView in _playingFieldView.CoinSpawPoint)
+            if (value)
             {
-                if (value)
-                {
-                    spawnView.transform.DOLocalMove(spawnView.GetShowPosition(), _animationTime);
-                }
-                else
-                {
-                    spawnView.transform.DOLocalMove(spawnView.GetHidePosition(), _animationTime);
-  
-                }
+                _playingFieldView.CurrentCoinPoint.transform.DOLocalMove(_playingFieldView.CurrentCoinPoint.GetShowPosition(), _animationTime);
+            }
+            else
+            {
+                _playingFieldView.CurrentCoinPoint.transform.DOLocalMove(_playingFieldView.CurrentCoinPoint.GetHidePosition(), _animationTime);
             }
         }
     }

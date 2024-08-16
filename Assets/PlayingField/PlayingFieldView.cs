@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Coin;
 using PlayingField;
 using UnityEngine;
 using Zenject;
@@ -8,6 +9,7 @@ public class PlayingFieldView : MonoBehaviour
 {
     public Transform Colums => colums;
     public CoinSpawnView[] CoinSpawPoint => coinSpawPoint;
+    public CurrentCoinPointView CurrentCoinPoint => currentCoinPoint;
     
     [SerializeField] private GameObject cylinder;
     [SerializeField] private GameObject left;
@@ -15,14 +17,10 @@ public class PlayingFieldView : MonoBehaviour
     
     [SerializeField] private Transform colums;
     [SerializeField] private CoinSpawnView[] coinSpawPoint;
-    [SerializeField] private GameObject[] arrows;
+    [SerializeField] private CurrentCoinPointView currentCoinPoint;
     
     private Vector3 position = new Vector3(7.5f, 9.8f, 0f);
 
-    public GameObject[] GetArrows()
-    {
-        return arrows;
-    }
     private void ReInit(PlayingFieldModel item)
     {
         cylinder.transform.position = item.CylindrTransfom.position;

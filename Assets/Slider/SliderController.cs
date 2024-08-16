@@ -39,16 +39,14 @@ namespace Slider
             {
                 InitButtons();
                 SetStartValue();
-                var rect = _sliderView.GetComponent<RectTransform>();
                 
-                rect.DOAnchorPos(_sliderView.Positions[0], _animationTime)
+                _sliderView.RectTransforms.DOAnchorPos(_sliderView.Positions[0], _animationTime)
                     .OnComplete(() => StartSliding(_startBoolValue));
             }
             else
             {
-                var rect = _sliderView.GetComponent<RectTransform>();
                 UnSubscribeButtons();
-                rect.DOAnchorPos(_sliderView.Positions[1], _animationTime);
+                _sliderView.RectTransforms.DOAnchorPos(_sliderView.Positions[1], _animationTime);
             }
         }
 

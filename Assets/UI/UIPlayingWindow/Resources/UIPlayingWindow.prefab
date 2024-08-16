@@ -585,3 +585,4 @@ MonoBehaviour:
   positions:
   - {x: 0, y: 0, z: 0}
   - {x: 1000, y: 0, z: 0}
+  rectTransforms: {fileID: 2709032420687992174}

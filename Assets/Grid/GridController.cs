@@ -32,6 +32,7 @@ namespace Grid
         private List<CoinView> _coinViewsList = new List<CoinView>();
 
         private Dictionary<int, ColumVew> _dictionaryOfColums = new Dictionary<int, ColumVew>();
+        private Dictionary<int, Queue<CoinView>> _dictionaryOfCoins = new Dictionary<int, Queue<CoinView>>();
         private Dictionary<ColumVew, List<CellView>> _dictionaryOfCells = new Dictionary<ColumVew, List<CellView>>();
         
         private Vector3 _firstColumPosition = new Vector3(-5.6f,0,0);
@@ -42,9 +43,13 @@ namespace Grid
 
         private UIWinWindowView _uiWinWindowView;
         private PlayingFieldView _playingFieldView;
+        private CoinView _currentCoinView;
 
         private int _currentNumberComand;
         private int _currentCoinLeght = 0;
+        
+        private bool pve;
+        private bool isFistPlayer;
         
         public GridController(
             IUIService uiService,
@@ -82,6 +87,26 @@ namespace Grid
             SpawnCell();
             
             SpawnCoins();
+            PikupCoin();
+        }
+
+        private void PikupCoin()
+        {
+            if (isFistPlayer)
+            {
+                _currentCoinView = _dictionaryOfCoins[0].Peek();
+               _dictionaryOfCoins[0].Dequeue();
+            }
+            else
+            {
+                _currentCoinView = _dictionaryOfCoins[1].Peek();
+                _dictionaryOfCoins[1].Dequeue();
+            }
+
+            isFistPlayer = !isFistPlayer;
+
+            _currentCoinView.transform.SetParent(_playingFieldView.CurrentCoinPoint.transform, false);
+            _currentCoinView.transform.localPosition = Vector3.zero;
         }
 
         public void ResetColumsRotation()
@@ -96,9 +121,12 @@ namespace Grid
 
         public void SpawnCoins()
         {
+            int needCoinsCount = CurrentCoinsCount();
+            
             for (int i = 0; i < 2; i++)
             {
-                for (int j = 0; j < 10; j++)
+                Queue<CoinView> coinViews = new Queue<CoinView>();
+                for (int j = 0; j < needCoinsCount; j++)
                 {
                     var coin = _coinController.SpawnCoin(i);
                     Vector3 spawnPoint = new Vector3(0, j * -2.5f, 0);
@@ -107,11 +135,21 @@ namespace Grid
                     coin.CellTransformCellPosition(spawnPoint);
                     coin.OnCellFill += SelectColum;
                     coin.transform.SetParent(_playingFieldView.CoinSpawPoint[i].transform, false);
+                  
                     _coinViewsList.Add(coin);
+                    coinViews.Enqueue(coin);
                 }
+                _dictionaryOfCoins.Add(i, coinViews);
             }
         }
 
+        private int CurrentCoinsCount()
+        {
+            int needCoins =
+                _gridConfig.GetGrid(DiffcultLevel.Normal).columnCount *
+                _gridConfig.GetGrid(DiffcultLevel.Normal).lineCount / 2;
+            return needCoins;
+        }
         public void ClearAll()
         {
             ClearDictionarys();
@@ -130,14 +168,6 @@ namespace Grid
         {
         }
 
-        public void SetActiveColums(bool value)
-        {
-            foreach (var colum in _columViewsList)
-            {
-                colum.BoxCollider.enabled = value;
-            }
-        }
-
         public void SpinColum()
         {
             int xValue = (int)_sliderController.GetSliderValue()*180;
@@ -145,11 +175,11 @@ namespace Grid
             {
                 FlipColumn(CurrentColum.ColumID);
             }
-    
-            Debug.Log("Random Angle = " + xValue);
+            
             CurrentColum.transform.DORotate(new Vector3(xValue, 0, 0), 3f, RotateMode.LocalAxisAdd)
                 .OnComplete(()=>
                 {
+                    PikupCoin();
                     СheckAllCells();
                     _playingFieldController.SetActiveCoins(true);
                     OnSpinningIsDone?.Invoke();

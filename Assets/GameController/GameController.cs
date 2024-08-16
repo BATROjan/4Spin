@@ -12,7 +12,7 @@ namespace GameController
         private readonly IUIService _uiService;
         private readonly IDragController _dragController;
         private readonly GridController _gridController;
-
+        
         public GameController(
             IUIService uiService,
             IDragController dragController,
@@ -27,7 +27,6 @@ namespace GameController
         {
             _gridController.SpawnGrid();
             _dragController.StartRaycastInteraction();
-            Debug.Log("StartGame");
         }
 
         public void RestartGame()

@@ -41,7 +41,6 @@ namespace UI.UISelectOpponetWindow
         private void SelectComputer()
         {
             SelectOpponent();
-            Debug.Log("openOpponent");
         }
 
         private void SelectPlayer()
