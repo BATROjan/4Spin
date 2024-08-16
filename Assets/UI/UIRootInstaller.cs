@@ -1,5 +1,6 @@
 using UI.UILevelSelectWindow;
 using UI.UIPlayingWindow;
+using UI.UISelectOpponetWindow;
 using UI.UIService;
 using UI.UIStartWindow;
 using UI.UIWinWindow;
@@ -18,6 +19,9 @@ namespace UI
                 .Install(Container);
             
             UIPlayingWindowInstaller
+                .Install(Container);
+            
+            UISelectOpponentWindowInstaller
                 .Install(Container);
             
             UIWinWindowInstaller

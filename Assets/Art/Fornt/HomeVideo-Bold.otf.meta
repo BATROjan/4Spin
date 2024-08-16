@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: 55de014a480b2eb4bb0ddd2a06597dd8
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - Home Video
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: b148f044b88b4a4479a99d79cba1cd8b, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

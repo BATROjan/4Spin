@@ -1,4 +1,5 @@
 using UI.UILevelSelectWindow;
+using UI.UISelectOpponetWindow;
 using UI.UIService;
 using UnityEngine.EventSystems;
 
@@ -29,7 +30,7 @@ namespace UI.UIStartWindow
         private void SelectLevel()
         {
             _uiService.Hide<UIStartWindow>();
-            _uiService.Show<UIlevelSelectWindow>();
+            _uiService.Show<UISelectOpponentWindow>();
             
             UISubscribeButtons();
         }
