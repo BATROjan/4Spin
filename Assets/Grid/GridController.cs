@@ -92,17 +92,20 @@ namespace Grid
             {
                 _currentCoinView = _dictionaryOfCoins[1].Peek();
                 _dictionaryOfCoins[1].Dequeue();
+
             }
             else
             {
                 _currentCoinView = _dictionaryOfCoins[0].Peek();
                 _dictionaryOfCoins[0].Dequeue();
-                if (_dictionaryOfCoins[0].Count == 0)
-                {
-                    OnLastCoinIsSet += Draw;
-                }
+                
             }
-
+            
+            if (_dictionaryOfCoins[0].Count == 0 && _dictionaryOfCoins[1].Count == 0)
+            {
+                OnLastCoinIsSet += Draw;
+            }
+            
             isFistPlayer = !isFistPlayer;
 
             _currentCoinView.transform.SetParent(_playingFieldView.CurrentCoinPoint.transform, false);
@@ -249,15 +252,16 @@ namespace Grid
                 .OnComplete(()=>
                 {
                     СheckAllCells();
+                    _playingFieldController.SetActiveCoin(true);
+                    OnSpinningIsDone?.Invoke();
+                    if (_currentCoinLeght != _currentGridModel.CountCellsToWin && OnLastCoinIsSet != null)
+                    {
+                        OnLastCoinIsSet?.Invoke();
+                    }
+
                     if (!isWin)
                     {
                         PikupCoin();
-                    }
-                    _playingFieldController.SetActiveCoin(true);
-                    OnSpinningIsDone?.Invoke();
-                    if (_currentCoinLeght != _currentGridModel.CountCellsToWin || OnLastCoinIsSet != null)
-                    {
-                        OnLastCoinIsSet?.Invoke();
                     }
                 });
         }
@@ -311,7 +315,7 @@ namespace Grid
         {
             for (int i = 0; i < _currentGridModel.columnCount; i++)
             {
-                int currentCoinLeght = 0;
+                _currentCoinLeght = 0;
                 _lightsCellViewsList.Clear();
                 for (int j = 0; j < _currentGridModel.lineCount; j++)
                 {
@@ -322,7 +326,7 @@ namespace Grid
 
         private void CheckRightDiagonals()
         { 
-            int currentCoinLeght = 0;
+            _currentCoinLeght = 0;
             _lightsCellViewsList.Clear();
             for (int j = 0 ; j < _currentGridModel.columnCount-1; j++)
             {
@@ -330,7 +334,7 @@ namespace Grid
                 CheckCell(j, i);
             }
             
-            currentCoinLeght = 0;
+            _currentCoinLeght = 0;
             _lightsCellViewsList.Clear();
             for (int f = 0; f < _currentGridModel.columnCount; f++)
             {
@@ -348,7 +352,7 @@ namespace Grid
 
         private void CheckLeftDiagonals()
         {
-            int currentCoinLeght = 0;
+            _currentCoinLeght = 0;
             _lightsCellViewsList.Clear();
             
             for (int j = _currentGridModel.lineCount-1; j >= _currentGridModel.CountCellsToWin; j--)
@@ -358,7 +362,7 @@ namespace Grid
                 CheckCell(j, i);
             }
             
-            currentCoinLeght = 0;
+            _currentCoinLeght = 0;
             _lightsCellViewsList.Clear();
             for (int f = 0; f < _currentGridModel.columnCount; f++)
             {
