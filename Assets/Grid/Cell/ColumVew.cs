@@ -11,6 +11,5 @@ public class ColumVew : MonoBehaviour
     
     public class  Pool : MonoMemoryPool<ColumVew>
     {
-            
     }
 }

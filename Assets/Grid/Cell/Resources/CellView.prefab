@@ -97,6 +97,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d29bfb1d4ab4fa2bc1afd54e5c79594, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _collider: {fileID: 4754629313881922580}
+  materials:
+  - {fileID: 2100000, guid: df88bb5445136e54dadce60ea374c234, type: 2}
+  - {fileID: 2100000, guid: 50591706c42594641abe45f4a0c6d52f, type: 2}
+  meshRenderer: {fileID: 3305817944853153150}
 --- !u!135 &4754629313881922580
 SphereCollider:
   m_ObjectHideFlags: 0

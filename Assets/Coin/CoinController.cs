@@ -8,8 +8,6 @@ public class CoinController
    private readonly CoinView.Pool _coinPool;
    private readonly CoinConfig _coinConfig;
    
-   private List<CoinView> _coinViews = new List<CoinView>();
-   
    public CoinController(CoinView.Pool coinPool,
       CoinConfig coinConfig)
    {
@@ -21,17 +19,17 @@ public class CoinController
    {
       var coinView = _coinPool.Spawn(_coinConfig.GetCoinModel(id));
       coinView.CellTransformCellPosition(coinView.transform.position);
-      _coinViews.Add(coinView);
+      SetActiveCollider(coinView, true);
       return coinView;
    }
 
-   public void DespawnCoin()
+   public void SetActiveCollider(CoinView coinView, bool value)
    {
-      foreach (var coin in _coinViews)
-      {
-         _coinPool.Despawn(coin);
-      }   
-      
-      _coinViews.Clear();
+      coinView.GetMeshCollider().enabled = value;
+   }
+
+   public void DespawnCoin(CoinView coin)
+   {
+      _coinPool.Despawn(coin);
    }
 }

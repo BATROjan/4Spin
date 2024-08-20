@@ -100,7 +100,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CellView: {fileID: 0}
   CoinPosition: {fileID: 5715161527650201747}
+  NumberComand: 0
   meshRenderer: {fileID: 69797959046180264}
+  meshCollider: {fileID: 3306787320020617588}
 --- !u!64 &3306787320020617588
 MeshCollider:
   m_ObjectHideFlags: 0

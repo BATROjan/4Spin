@@ -101,10 +101,12 @@ namespace DragController
                 {
                     if (!isReadyToSpin)
                     {
+                        coinView.CellView.GetCollier().enabled = false;
                         coinView.transform.SetParent(coinView.CellView.transform);
                         coinView.OnCellFill?.Invoke(coinView.CellView);
                         coinView.transform.localPosition = Vector3.zero;
-                        _playingFieldController.SetActiveCoins(false);
+                        _gridController.SetActiveCoinCollider(coinView, false);
+                        _playingFieldController.SetActiveCoin(false);
 
                         isReadyToSpin = true;
                     }

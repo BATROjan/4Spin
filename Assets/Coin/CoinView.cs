@@ -16,7 +16,7 @@ public class CoinView : MonoBehaviour
     private Vector3 _cellTransformPosition;
     
     [SerializeField] private MeshRenderer meshRenderer;
-
+    [SerializeField] private MeshCollider meshCollider;
     public void TargetTransformCellPosition(Vector3 position)
     {
         _targetTransformPosition = position;
@@ -25,7 +25,12 @@ public class CoinView : MonoBehaviour
     public Vector3 GetTargetPosition()
     {
         return _targetTransformPosition;
-    } 
+    }
+
+    public MeshCollider GetMeshCollider()
+    {
+        return meshCollider;
+    }
     public Vector3 GetCellPosition()
     {
         return _cellTransformPosition;

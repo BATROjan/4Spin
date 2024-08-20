@@ -6,6 +6,25 @@ namespace Grid.Cell
 {
     public class CellView : MonoBehaviour
     {
+        [SerializeField] private SphereCollider _collider;
+        [SerializeField] private Material[] materials;
+        [SerializeField] private MeshRenderer meshRenderer;
+        
+        private CoinView _coinView;
+
+        public SphereCollider GetCollier()
+        {
+            return _collider;
+        }
+
+        public MeshRenderer GetMeshRenderer()
+        {
+            return meshRenderer;
+        }
+        public Material[] GetMaterial()
+        {
+            return materials;
+        }
         private void OnTriggerEnter(Collider other)
         {
             var coin = other.GetComponent<CoinView>();
@@ -26,7 +45,8 @@ namespace Grid.Cell
             }
         }
 
-        public class  Pool : MonoMemoryPool<CellView>
-        { }
+        public class Pool : MonoMemoryPool<CellView>
+        {
+        }
     }
 }

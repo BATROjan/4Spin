@@ -25,7 +25,12 @@ namespace PlayingField
             return view;
         }
 
-        public void SetActiveCoins(bool value)
+        public void DespawnView()
+        {
+            _playingFieldViewPool.Despawn(_playingFieldView);
+        }
+
+        public void SetActiveCoin(bool value)
         {
             if (value)
             {

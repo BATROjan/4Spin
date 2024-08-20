@@ -23,7 +23,6 @@ public class PlayingFieldView : MonoBehaviour
 
     private void ReInit(PlayingFieldModel item)
     {
-        cylinder.transform.position = item.CylindrTransfom.position;
         cylinder.transform.localScale = item.CylindrTransfom.localScale;
         cylinder.transform.rotation = item.CylindrTransfom.rotation;
     }

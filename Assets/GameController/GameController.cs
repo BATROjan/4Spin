@@ -1,3 +1,4 @@
+using DG.Tweening;
 using DragController;
 using Grid;
 using UI.UIPlayingWindow;
@@ -26,6 +27,10 @@ namespace GameController
         public void StartGame()
         {
             _gridController.SpawnGrid();
+            
+            _gridController.SpawnCoins();
+            _gridController.PikupCoin();
+            
             _dragController.StartRaycastInteraction();
         }
 
@@ -34,10 +39,16 @@ namespace GameController
             _uiService.Hide<UIWinWindowView>();
             _uiService.Show<UIPlayingWindowView>();
             
-            _gridController.DespawnCoins();
+            _gridController.DespawnAll();
+            
+            _gridController.ClearAll();
+           
+            _gridController.SpawnGrid();
             _gridController.SpawnCoins();
             
-            _gridController.ResetColumsRotation();
+            _gridController.ResetAll();
+            
+            _gridController.PikupCoin();
         }
     }
 }
