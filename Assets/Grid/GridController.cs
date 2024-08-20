@@ -69,7 +69,8 @@ namespace Grid
             _gridConfig = gridConfig;
 
             _sliderController.OnGetReadyToSpin += SpinColum;
-
+            _gridConfig.Init();
+            
             _uiWinWindowView = _uiService.Get<UIWinWindowView>();
         }
 
@@ -334,10 +335,10 @@ namespace Grid
                 CheckCell(j, i);
             }
             
-            _currentCoinLeght = 0;
             _lightsCellViewsList.Clear();
             for (int f = 0; f < _currentGridModel.columnCount; f++)
             {
+                _currentCoinLeght = 0;
                 var offset = f;
                 for (int i = 0 ; i < _currentGridModel.columnCount; i++)
                 {
@@ -362,10 +363,11 @@ namespace Grid
                 CheckCell(j, i);
             }
             
-            _currentCoinLeght = 0;
+            
             _lightsCellViewsList.Clear();
             for (int f = 0; f < _currentGridModel.columnCount; f++)
             {
+                _currentCoinLeght = 0;
                 var offset = f;
                 
                 for (int j = _currentGridModel.lineCount - 1-offset; j >= 0; j--)

@@ -28,7 +28,7 @@ namespace Grid
             throw new Exception($"{nameof(diffcultLevel)}: {diffcultLevel} doesn't contains in dictionary");
         }
 
-        private void Init()
+        public void Init()
         {
             foreach (var gridModel in gridModels)
             {
