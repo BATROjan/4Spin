@@ -17,11 +17,25 @@ namespace UI.UIPlayingWindow
             _uiService = uiService;
             _uiPlayingWindow = _uiService.Get<UIPlayingWindowView>();
             _sliderController.SetSliderView(_uiPlayingWindow.SliderPanel);
+            
+            _uiPlayingWindow.ShowAction += InitButtons;
+            _uiPlayingWindow.HideAction += UnSubscribeButtons;
         }
 
-        public void ActivateSliderPanel(bool value)
+        private void UnSubscribeButtons()
         {
-            _sliderController.ShowAnimation(value);
+            _uiPlayingWindow.Buttons[0].OnClick -= ShowPauseWindow;
+        }
+
+        private void InitButtons()
+        {
+            _uiPlayingWindow.Buttons[0].OnClick += ShowPauseWindow;
+        }
+
+        private void ShowPauseWindow()
+        {
+            _uiService.Hide<UIPlayingWindowView>();
+            _uiService.Show<UIPauseGameWindow.UIPauseGameWindow>();
         }
     }
 }

@@ -19,6 +19,7 @@ namespace UI.UILevelSelectWindow
             
             _uiSelectWindow = _uiService.Get<UIlevelSelectWindow>();
             _uiSelectWindow.ShowAction += InitButtons;
+            _uiSelectWindow.HideAction += UnSubscribeButtons;
         }
         public void InitButtons()
         {
@@ -30,8 +31,7 @@ namespace UI.UILevelSelectWindow
             _uiService.Hide<UIlevelSelectWindow>();
             _uiService.Show<UIPlayingWindowView>();
             
-            _gameController.StartGame();
-            UnSubscribeButtons();
+            _gameController.StartGame(); ;
         }
         
         public void UnSubscribeButtons()

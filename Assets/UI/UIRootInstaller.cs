@@ -1,4 +1,5 @@
 using UI.UILevelSelectWindow;
+using UI.UIPauseGameWindow;
 using UI.UIPlayingWindow;
 using UI.UISelectOpponetWindow;
 using UI.UIService;
@@ -25,6 +26,9 @@ namespace UI
                 .Install(Container);
             
             UIWinWindowInstaller
+                .Install(Container); 
+            
+            UIPauseGameInstaller
                 .Install(Container);
             
             Container.Bind<IUIRoot>()

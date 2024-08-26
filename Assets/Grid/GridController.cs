@@ -105,7 +105,10 @@ namespace Grid
             {
                 _currentCoinView = _dictionaryOfCoins[1].Peek();
                 _dictionaryOfCoins[1].Dequeue();
-                _currentCoinView.gameObject.layer = 3;
+                if (isPvE)
+                {
+                    _currentCoinView.gameObject.layer = 3;
+                }
             }
             else
             {

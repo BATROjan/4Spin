@@ -56,6 +56,23 @@ namespace GameController
             
                 _gridController.PikupCoin();
            
+        }      
+        public void ResetGame()
+        { 
+           _gridController.DespawnAll();
+           _gridController.ClearAll();
+        }
+
+        public void TimeControll(bool value)
+        {
+            if (value)
+            {
+                Time.timeScale = 1;
+            }
+            else
+            {
+                Time.timeScale = 0;
+            }
         }
 
         public void SetPvE(bool value)
