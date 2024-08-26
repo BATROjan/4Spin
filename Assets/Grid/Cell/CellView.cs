@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.UI;
 using Zenject;
 
 namespace Grid.Cell
@@ -7,7 +8,6 @@ namespace Grid.Cell
     public class CellView : MonoBehaviour
     {
         [SerializeField] private SphereCollider _collider;
-        [SerializeField] private Material[] materials;
         [SerializeField] private MeshRenderer meshRenderer;
         
         private CoinView _coinView;
@@ -20,10 +20,6 @@ namespace Grid.Cell
         public MeshRenderer GetMeshRenderer()
         {
             return meshRenderer;
-        }
-        public Material[] GetMaterial()
-        {
-            return materials;
         }
         private void OnTriggerEnter(Collider other)
         {
@@ -44,9 +40,20 @@ namespace Grid.Cell
                 coin.CellView = null;
             }
         }
-
-        public class Pool : MonoMemoryPool<CellView>
+        private void Reinit(Material material)
         {
+            meshRenderer.material = material;
+        }
+
+        public class Pool : MonoMemoryPool<Material, CellView>
+        {
+            protected override void Reinitialize(Material material, CellView item)
+            {
+                item.Reinit(material);
+                base.Reinitialize(material, item);
+            }
+
+           
         }
     }
 }

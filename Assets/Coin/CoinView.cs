@@ -52,10 +52,10 @@ public class CoinView : MonoBehaviour
     
     public class Pool: MonoMemoryPool<CoinModel, CoinView>
     {
-        protected override void Reinitialize(CoinModel coinModel, CoinView item)
+        protected override void Reinitialize(CoinModel material, CoinView item)
         {
-            base.Reinitialize(coinModel, item);
-            item.ReInit(coinModel);
+            base.Reinitialize(material, item);
+            item.ReInit(material);
         }
     }
 }

@@ -1,3 +1,4 @@
+using Environment;
 using Grid;
 using MainCamera;
 using PlayingField;
@@ -14,13 +15,15 @@ namespace DragController.MouseController
         private readonly GridController _gridController;
         private readonly PlayingFieldController _playingFieldController;
         
-        public MouseDragController(
+        public MouseDragController( 
+            EnvironmentController environmentController,
             UIPlayingWindowController uiPlayingWindowController,
             GridController gridController,
             PlayingFieldController playingFieldController,
             CameraController cameraController, 
             TickableManager tickableManager) 
             : base(
+                environmentController,
                 uiPlayingWindowController,
                 gridController,
                 playingFieldController, 

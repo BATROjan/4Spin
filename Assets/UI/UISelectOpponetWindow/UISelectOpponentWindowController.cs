@@ -6,13 +6,16 @@ namespace UI.UISelectOpponetWindow
 {
     public class UISelectOpponentWindowController
     {
+        private readonly GameController.GameController _gameController;
         private readonly IUIService _uiService;
 
         private UISelectOpponentWindow _uiSelectOpponentWindow;
 
         public UISelectOpponentWindowController(
+            GameController.GameController gameController,
             IUIService uiService)
         {
+            _gameController = gameController;
             _uiService = uiService;
             _uiSelectOpponentWindow = _uiService.Get<UISelectOpponentWindow>();
 
@@ -41,11 +44,13 @@ namespace UI.UISelectOpponetWindow
         private void SelectComputer()
         {
             SelectOpponent();
+            _gameController.SetPvE(false);
         }
 
         private void SelectPlayer()
         {
             SelectOpponent();
+            _gameController.SetPvE(true);
         }
     }
 }

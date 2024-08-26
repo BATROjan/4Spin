@@ -26,3 +26,6 @@ MonoBehaviour:
     columnCount: 5
     lineCount: 8
     CountCellsToWin: 4
+  _materials:
+  - {fileID: 2100000, guid: df88bb5445136e54dadce60ea374c234, type: 2}
+  - {fileID: 2100000, guid: 50591706c42594641abe45f4a0c6d52f, type: 2}

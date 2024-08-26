@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using DG.Tweening;
+using Environment;
 using Grid.Cell;
 using PlayingField;
 using Slider;
@@ -8,6 +9,7 @@ using UI.UIPlayingWindow;
 using UI.UIService;
 using UI.UIWinWindow;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Grid
 {
@@ -16,6 +18,7 @@ namespace Grid
         public Action OnLastCoinIsSet;
         public Action OnSpinningIsDone;
 
+        private readonly EnvironmentController _environmentController;
         private readonly IUIService _uiService;
         private readonly SliderController _sliderController;
         private readonly CoinController _coinController;
@@ -24,6 +27,7 @@ namespace Grid
         private readonly CellView.Pool _cellViewPool;
         private readonly GridConfig _gridConfig;
 
+        private List<CellView> _freeCellViewsList = new List<CellView>();
         private List<CellView> _cellViewsList = new List<CellView>();
         private List<CellView> _lightsCellViewsList = new List<CellView>();
         private List<ColumVew> _columViewsList = new List<ColumVew>();
@@ -47,10 +51,11 @@ namespace Grid
         private int _currentNumberComand;
         private int _currentCoinLeght = 0;
         
-        private bool pve;
+        private bool isPvE;
         private bool isFistPlayer = true;
         private bool isWin;
         public GridController(
+            EnvironmentController environmentController,
             IUIService uiService,
             SliderController sliderController,
             CoinController coinController,
@@ -60,6 +65,7 @@ namespace Grid
             GridConfig gridConfig
         )
         {
+            _environmentController = environmentController;
             _uiService = uiService;
             _sliderController = sliderController;
             _coinController = coinController;
@@ -69,6 +75,7 @@ namespace Grid
             _gridConfig = gridConfig;
 
             _sliderController.OnGetReadyToSpin += SpinColum;
+            _playingFieldController.NextStep += EmploymentStep;
             _gridConfig.Init();
             
             _uiWinWindowView = _uiService.Get<UIWinWindowView>();
@@ -87,19 +94,23 @@ namespace Grid
             SpawnCell();
         }
 
+        public void CheckIsPvE(bool value)
+        {
+            isPvE = value;
+        }
+
         public void PikupCoin()
         {
             if (!isFistPlayer)
             {
                 _currentCoinView = _dictionaryOfCoins[1].Peek();
                 _dictionaryOfCoins[1].Dequeue();
-
+                _currentCoinView.gameObject.layer = 3;
             }
             else
             {
                 _currentCoinView = _dictionaryOfCoins[0].Peek();
                 _dictionaryOfCoins[0].Dequeue();
-                
             }
             
             if (_dictionaryOfCoins[0].Count == 0 && _dictionaryOfCoins[1].Count == 0)
@@ -110,6 +121,7 @@ namespace Grid
             isFistPlayer = !isFistPlayer;
 
             _currentCoinView.transform.SetParent(_playingFieldView.CurrentCoinPoint.transform, false);
+            
             _currentCoinView.transform.localPosition = Vector3.zero;
         }
 
@@ -132,9 +144,14 @@ namespace Grid
             _coinController.SetActiveCollider(coinView, value);
         }
 
+        public void ResetCoinView()
+        {
+            _currentCoinView = null;
+        }
+
         public void SetActiveCellCollider(bool value)
         {
-            foreach (var cell in _cellViewsList)
+            foreach (var cell in _freeCellViewsList)
             {
                 cell.GetCollier().enabled = value;
             }
@@ -154,7 +171,7 @@ namespace Grid
         {
             foreach (var cell in _lightsCellViewsList)
             {
-                cell.GetMeshRenderer().material = cell.GetMaterial()[id];
+                cell.GetMeshRenderer().material = _gridConfig.GetMaterial(id);
             }
         }
 
@@ -172,6 +189,7 @@ namespace Grid
                     
                     coin.CoinPosition.position = spawnPoint;
                     coin.CellTransformCellPosition(Vector3.zero);
+                    
                     coin.OnCellFill += SelectColum;
                     coin.transform.SetParent(_playingFieldView.CoinSpawPoint[i].transform, false);
                   
@@ -207,6 +225,7 @@ namespace Grid
         {
             _coinViewsList.Clear();
             _columViewsList.Clear();
+            _freeCellViewsList.Clear();
             _cellViewsList.Clear();
         }
 
@@ -216,6 +235,11 @@ namespace Grid
             DespawnColums();
             DespawCells();
             DespawnPlayingView();
+        }
+
+        public void RemoveCelFromList(CellView view)
+        {
+            _freeCellViewsList.Remove(view);
         }
 
         private void DespawnPlayingView()
@@ -243,17 +267,28 @@ namespace Grid
 
         public void SpinColum()
         {
-            int xValue = (int)_sliderController.GetSliderValue()*180;
-            if ((int)_sliderController.GetSliderValue() % 2 != 0)
+            int xValue = 0;
+            
+            if (isPvE && isFistPlayer)
+            {
+                xValue = _sliderController.GetEmploymentValueSelect()*180;
+            }
+            else
+            { 
+                xValue = (int)_sliderController.GetSliderValue()*180;
+            }
+            Debug.Log("xValue= " + xValue);
+            if (xValue % 360 != 0)
             {
                 FlipColumn(_currentColum.ColumID);
+                Debug.Log("flip");
             }
             
             _currentColum.transform.DORotate(new Vector3(xValue, 0, 0), 3f, RotateMode.LocalAxisAdd)
                 .OnComplete(()=>
                 {
                     СheckAllCells();
-                    _playingFieldController.SetActiveCoin(true);
+                    _playingFieldController.SetActiveCoin(true, isFistPlayer, isPvE);
                     OnSpinningIsDone?.Invoke();
                     if (_currentCoinLeght != _currentGridModel.CountCellsToWin && OnLastCoinIsSet != null)
                     {
@@ -267,6 +302,17 @@ namespace Grid
                 });
         }
 
+        private void EmploymentStep()
+        {
+            CellView cellView = GetRandomCellView();
+            _environmentController.NextStep(_currentCoinView, cellView);
+            _playingFieldController.SetActiveCoin(false);
+            if (_currentCoinView)
+            {
+                RemoveCelFromList(cellView);
+            }
+        }
+
         public void FlipColumn(int columnIndex)
         {
             int linesCount = _cellViews.GetLength(0);
@@ -277,6 +323,13 @@ namespace Grid
                 _cellViews[i, columnIndex] = _cellViews[linesCount - i - 1, columnIndex];
                 _cellViews[linesCount - i - 1, columnIndex] = temp;
             }
+        }
+
+        private CellView GetRandomCellView()
+        {
+            int id = Random.Range(0, _freeCellViewsList.Count - 1);
+
+            return _freeCellViewsList[id];
         }
 
         private void СheckAllCells()
@@ -363,7 +416,6 @@ namespace Grid
                 CheckCell(j, i);
             }
             
-            
             _lightsCellViewsList.Clear();
             for (int f = 0; f < _currentGridModel.columnCount; f++)
             {
@@ -434,16 +486,16 @@ namespace Grid
                 for (int j = 0; j < _currentGridModel.lineCount; j++)
                 {
                     var cellPosition = _firstCellPosition + 3.8f * new Vector3(0, j, 0);
-                    var newCell = _cellViewPool.Spawn();
+                    var newCell = _cellViewPool.Spawn(_gridConfig.GetMaterial(0));
                     newCell.transform.position = cellPosition;
-                    newCell.GetMeshRenderer().material = newCell.GetMaterial()[0];
-                    
+
+                    _freeCellViewsList.Add(newCell);
                     _cellViewsList.Add(newCell);
                     _cellViews[j, i] = newCell;
-                    
+
                     someCurrentCells.Add(newCell);
                 }
-                
+
                 _dictionaryOfCells.Add(_dictionaryOfColums[i], someCurrentCells);
 
                 foreach (var cell in someCurrentCells)
@@ -462,7 +514,22 @@ namespace Grid
                     if (cell == cellView)
                     {
                         _currentColum = colum.Key;
-                        _sliderController.ShowAnimation(true);
+                        
+                        if (isPvE)
+                        {
+                            if (!isFistPlayer)
+                            {
+                                _sliderController.ShowAnimation(true);
+                            }
+                            else
+                            {
+                                SpinColum();
+                            }
+                        }
+                        else
+                        {
+                            _sliderController.ShowAnimation(true);
+                        }
                         break;
                     }
                 }
@@ -473,18 +540,20 @@ namespace Grid
         {
             for (int i = 0; i < _currentGridModel.columnCount; i++)
             {
+                
                 var columPosition = _firstColumPosition + 3.8f * new Vector3(i, 0, 0);
-               
+
                 var colum = _columViewPool.Spawn();
                 colum.ColumID = i;
                 colum.ColumTranform.position = columPosition;
-                
+
                 var rotation = colum.ColumTranform.rotation;
                 rotation.eulerAngles = Vector3.zero;
                 colum.ColumTranform.rotation = rotation;
-                
+
                 _dictionaryOfColums.Add(i, colum);
                 _columViewsList.Add(colum);
+                
             }
             foreach (var colum in _columViewsList)
             {

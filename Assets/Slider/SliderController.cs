@@ -18,19 +18,9 @@ namespace Slider
         private bool _startBoolValue;
         private Tween _animationTween;
         
-        public SliderController()
-        {
-            
-        }
-
         public void SetSliderView(SliderView view)
         {
             _sliderView = view;
-        }
-
-        public SliderView GetSliderView()
-        {
-            return _sliderView;
         }
         
         public void ShowAnimation(bool value)
@@ -48,6 +38,11 @@ namespace Slider
                 UnSubscribeButtons();
                 _sliderView.RectTransforms.DOAnchorPos(_sliderView.Positions[1], _animationTime);
             }
+        }
+
+        public int GetEmploymentValueSelect()
+        {
+            return Random.Range(2, 11);
         }
 
         public void StartSliding(bool value)

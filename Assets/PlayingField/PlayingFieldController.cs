@@ -1,9 +1,12 @@
+using System;
 using DG.Tweening;
+using Unity.VisualScripting;
 
 namespace PlayingField
 {
     public class PlayingFieldController
     {
+        public Action NextStep;
         private readonly PlayingFieldView.Pool _playingFieldViewPool;
         private readonly PlayingFieldConfig _playingFieldConfig;
 
@@ -30,11 +33,18 @@ namespace PlayingField
             _playingFieldViewPool.Despawn(_playingFieldView);
         }
 
-        public void SetActiveCoin(bool value)
+        public void SetActiveCoin(bool value, bool isFirstPlayer = false, bool isPvE = false)
         {
             if (value)
             {
-                _playingFieldView.CurrentCoinPoint.transform.DOLocalMove(_playingFieldView.CurrentCoinPoint.GetShowPosition(), _animationTime);
+                _playingFieldView.CurrentCoinPoint.transform.DOLocalMove(_playingFieldView.CurrentCoinPoint.GetShowPosition(), _animationTime).OnComplete(
+                    () =>
+                    {
+                        if (!isFirstPlayer && isPvE)
+                        {
+                            NextStep?.Invoke();
+                        }
+                      });
             }
             else
             {

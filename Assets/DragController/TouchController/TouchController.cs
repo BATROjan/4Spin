@@ -1,4 +1,5 @@
-﻿using Grid;
+﻿using Environment;
+using Grid;
 using MainCamera;
 using PlayingField;
 using UI.UIPlayingWindow;
@@ -10,12 +11,14 @@ namespace DragController.TouchController
     public class TouchController: BaseDragController
     {
         public TouchController(
+            EnvironmentController environmentController,
             UIPlayingWindowController uiPlayingWindowController, 
             GridController gridController, 
             PlayingFieldController playingFieldController, 
             CameraController cameraController, 
             TickableManager tickableManager) : 
             base(
+                environmentController,
                 uiPlayingWindowController, 
                 gridController, 
                 playingFieldController, 

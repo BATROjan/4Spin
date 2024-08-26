@@ -10,6 +10,7 @@ namespace Grid
     {
         [SerializeField] private float offset;
         [SerializeField] private GridModel[] gridModels;
+        [SerializeField] private Material[] _materials;
 
         private Dictionary<DiffcultLevel, GridModel> _dictionaryOfLevels = new();
         private bool _isInit;
@@ -38,6 +39,11 @@ namespace Grid
                 }
             }
             _isInit = true;
+        }
+
+        public Material GetMaterial(int id)
+        {
+            return _materials[id];
         }
     }
 }

@@ -28,9 +28,9 @@ public class PlayingFieldView : MonoBehaviour
     }
     public class  Pool : MonoMemoryPool<PlayingFieldModel,PlayingFieldView>
     {
-        protected override void Reinitialize(PlayingFieldModel playingFieldModel, PlayingFieldView item)
+        protected override void Reinitialize(PlayingFieldModel material, PlayingFieldView item)
         {
-            item.ReInit(playingFieldModel);
+            item.ReInit(material);
             item.transform.position = item.position;
 
         }

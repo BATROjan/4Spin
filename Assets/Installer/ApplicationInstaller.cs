@@ -1,5 +1,7 @@
 using Coin;
 using DragController;
+using Environment;
+using GameController;
 using Grid;
 using PlayingField;
 using UI;
@@ -30,8 +32,17 @@ namespace Installer
             DragControllerInstaller
                 .Install(Container);
             
+            EnviromentInstaller
+                .Install(Container);
+            
             Container
                 .Bind<GameController.GameController>()
+                .AsSingle()
+                .NonLazy();
+            
+            Container
+                .Bind<GameConfig>()
+                .FromScriptableObjectResource("GameConfig")
                 .AsSingle()
                 .NonLazy();
         }
