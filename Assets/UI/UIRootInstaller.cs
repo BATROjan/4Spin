@@ -4,6 +4,7 @@ using UI.UIPlayingWindow;
 using UI.UISelectOpponetWindow;
 using UI.UIService;
 using UI.UIStartWindow;
+using UI.UITutorialWindow;
 using UI.UIWinWindow;
 using Zenject;
 
@@ -26,7 +27,10 @@ namespace UI
                 .Install(Container);
             
             UIWinWindowInstaller
-                .Install(Container); 
+                .Install(Container);
+            
+            UITutorialWindowInstaller
+                .Install(Container);
             
             UIPauseGameInstaller
                 .Install(Container);

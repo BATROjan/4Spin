@@ -18,6 +18,7 @@ namespace UI.UIStartWindow
             _uiStartWindow = _uiService.Get<UIStartWindow>();
             
             _uiStartWindow.ShowAction += InitButtons;
+            _uiStartWindow.HideAction += UnSubscribeButtons;
 
             _uiService.Show<UIStartWindow>();
         }
@@ -25,19 +26,25 @@ namespace UI.UIStartWindow
         public void InitButtons()
         {
             _uiStartWindow.Buttons[0].OnClick += SelectLevel;
+            _uiStartWindow.Buttons[1].OnClick += StartTutorial;
+        }
+
+        private void StartTutorial()
+        {
+            _uiService.Hide<UIStartWindow>();
+            _uiService.Show<UITutorialWindow.UITutorialWindow>();
         }
 
         private void SelectLevel()
         {
             _uiService.Hide<UIStartWindow>();
             _uiService.Show<UISelectOpponentWindow>();
-            
-            UISubscribeButtons();
         }
         
-        public void UISubscribeButtons()
+        public void UnSubscribeButtons()
         {
             _uiStartWindow.Buttons[0].OnClick -= SelectLevel;
+            _uiStartWindow.Buttons[1].OnClick -= StartTutorial;
         }
     }
 }

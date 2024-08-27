@@ -4,6 +4,7 @@ using Environment;
 using GameController;
 using Grid;
 using PlayingField;
+using Tutorial;
 using UI;
 using Zenject;
 
@@ -24,6 +25,9 @@ namespace Installer
                 .Install(Container);
             
             GridInstaller
+                .Install(Container);
+            
+            TutorialInstaller
                 .Install(Container);
             
             CoinInstaller
