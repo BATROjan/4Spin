@@ -1,25 +1,42 @@
-﻿using Slider;
+﻿using GameController;
+using Grid;
+using PlayingField;
+using Slider;
 using UI.UIService;
 
 namespace UI.UIPlayingWindow
 {
     public class UIPlayingWindowController
     {
+        private readonly GameConfig _gameConfig;
+        private readonly GridConfig _gridConfig;
         private readonly SliderController _sliderController;
         private readonly IUIService _uiService;
         private UIPlayingWindowView _uiPlayingWindow;
 
         public UIPlayingWindowController(
+            GameConfig gameConfig,
+            GridConfig gridConfig,
             SliderController sliderController,
             IUIService uiService)
         {
+            _gameConfig = gameConfig;
+            _gridConfig = gridConfig;
             _sliderController = sliderController;
             _uiService = uiService;
             _uiPlayingWindow = _uiService.Get<UIPlayingWindowView>();
             _sliderController.SetSliderView(_uiPlayingWindow.SliderPanel);
             
-            _uiPlayingWindow.ShowAction += InitButtons;
+            _uiPlayingWindow.ShowAction += Show;
             _uiPlayingWindow.HideAction += UnSubscribeButtons;
+        }
+
+        private void Show()
+        {
+            _uiPlayingWindow.RulesText.text = 
+                "Собери "+
+                _gridConfig.GetGrid(_gameConfig.DiffcultLevel).CountCellsToWin + " монетки в ряд";
+            InitButtons();
         }
 
         private void UnSubscribeButtons()

@@ -6,6 +6,12 @@ namespace GameController
 
     public class GameConfig: ScriptableObject
     {
+        public DiffcultLevel DiffcultLevel
+        {
+            get => diffcultLevel;
+            set => diffcultLevel = value;
+        }
+
         public bool IsPvE
         {
             get => isPvE;
@@ -13,5 +19,7 @@ namespace GameController
         }
 
         [SerializeField] private bool isPvE;
+        
+        private DiffcultLevel diffcultLevel;
     }
 }

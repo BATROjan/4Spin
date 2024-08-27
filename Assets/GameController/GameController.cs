@@ -27,10 +27,11 @@ namespace GameController
             _gridController = gridController;
         }
 
-        public void StartGame()
+        public void StartGame(DiffcultLevel diffcultLevel)
         {
+            _gameConfig.DiffcultLevel = diffcultLevel;
             _gridController.CheckIsPvE(_gameConfig.IsPvE);
-            _gridController.SpawnGrid();
+            _gridController.SpawnGrid( _gameConfig.DiffcultLevel);
             
             _gridController.SpawnCoins();
             _gridController.PikupCoin();
@@ -49,7 +50,7 @@ namespace GameController
             
             _gridController.ClearAll();
             
-                _gridController.SpawnGrid();
+                _gridController.SpawnGrid( _gameConfig.DiffcultLevel);
                 _gridController.SpawnCoins();
             
                 _gridController.ResetAll();

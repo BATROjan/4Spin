@@ -46,7 +46,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a683ed05358341ea8b4c179e7d2bbab8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buttonText: {fileID: 0}
+  buttonText: {fileID: 4157632554047500863}
+  diffcultLevel: 2
 --- !u!1 &4157632553565576810
 GameObject:
   m_ObjectHideFlags: 0
@@ -278,7 +279,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "-\u0441\u043A\u043E\u0440\u043E-"
+  m_Text: 3x3
 --- !u!1 &4157632553935718356
 GameObject:
   m_ObjectHideFlags: 0
@@ -438,7 +439,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "-\u0441\u043A\u043E\u0440\u043E-"
+  m_Text: 5x5
 --- !u!1 &4157632554578158545
 GameObject:
   m_ObjectHideFlags: 0
@@ -490,7 +491,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a683ed05358341ea8b4c179e7d2bbab8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buttonText: {fileID: 0}
+  buttonText: {fileID: 4157632553935718358}
+  diffcultLevel: 1
 --- !u!1 &4157632555101818527
 GameObject:
   m_ObjectHideFlags: 0
@@ -792,7 +794,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a683ed05358341ea8b4c179e7d2bbab8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buttonText: {fileID: 0}
+  buttonText: {fileID: 4157632553657019939}
+  diffcultLevel: 0
 --- !u!1 &4173460367744194017
 GameObject:
   m_ObjectHideFlags: 0

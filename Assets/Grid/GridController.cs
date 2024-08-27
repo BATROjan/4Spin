@@ -81,9 +81,9 @@ namespace Grid
             _uiWinWindowView = _uiService.Get<UIWinWindowView>();
         }
 
-        public void SpawnGrid()
+        public void SpawnGrid(DiffcultLevel diffcultLevel)
         { 
-            _currentGridModel = _gridConfig.GetGrid(DiffcultLevel.Normal);
+            _currentGridModel = _gridConfig.GetGrid(diffcultLevel);
             
             var playingFieldView = _playingFieldController.SpawnPlayingVew(_currentGridModel.diffcultLevel);
             _playingFieldView = playingFieldView;
@@ -280,11 +280,9 @@ namespace Grid
             { 
                 xValue = (int)_sliderController.GetSliderValue()*180;
             }
-            Debug.Log("xValue= " + xValue);
             if (xValue % 360 != 0)
             {
                 FlipColumn(_currentColum.ColumID);
-                Debug.Log("flip");
             }
             
             _currentColum.transform.DORotate(new Vector3(xValue, 0, 0), 3f, RotateMode.LocalAxisAdd)
