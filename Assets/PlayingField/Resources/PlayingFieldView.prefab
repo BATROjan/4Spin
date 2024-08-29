@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 8511665635481612112}
   - component: {fileID: 7871107458391683995}
   - component: {fileID: 7807473001317400014}
+  - component: {fileID: 4808960192323621497}
   m_Layer: 0
   m_Name: Cube.003
   m_TagString: Untagged
@@ -61,7 +62,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 53c67f12abed74441a2c36331615ee5b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -83,6 +84,19 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &4808960192323621497
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 314908012927056065}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.015811749, y: 0.03292683, z: 0.012926836}
+  m_Center: {x: 0.0020941256, y: 4.020627e-16, z: 0.0035365804}
 --- !u!1 &437560957819647370
 GameObject:
   m_ObjectHideFlags: 0
@@ -108,8 +122,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 437560957819647370}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.537, y: 0, z: 12.18}
-  m_LocalScale: {x: 9.179076, y: 5.85, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 12.18}
+  m_LocalScale: {x: 10.26496, y: 6.5420547, z: 1.1183}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2447563979744829721}
@@ -275,7 +289,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 53c67f12abed74441a2c36331615ee5b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -371,7 +385,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 53c67f12abed74441a2c36331615ee5b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -448,8 +462,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cylinder: {fileID: 3041504348658096816}
-  left: {fileID: 1369322995257665236}
-  right: {fileID: 314908012927056065}
+  leftBox: {fileID: 1369322995257665236}
+  rightBox: {fileID: 314908012927056065}
+  plane: {fileID: 5649684846694761664}
   colums: {fileID: 6909146485784374773}
   coinSpawPoint:
   - {fileID: 5407537606765055080}
@@ -548,7 +563,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 53c67f12abed74441a2c36331615ee5b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

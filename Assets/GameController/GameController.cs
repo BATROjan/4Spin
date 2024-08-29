@@ -29,6 +29,8 @@ namespace GameController
 
         public void StartGame(DiffcultLevel diffcultLevel)
         {
+            _gridController.ResetAll();
+            
             _gameConfig.DiffcultLevel = diffcultLevel;
             _gridController.CheckIsPvE(_gameConfig.IsPvE);
             _gridController.SpawnGrid( _gameConfig.DiffcultLevel);

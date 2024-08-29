@@ -13,8 +13,21 @@ MonoBehaviour:
   m_Name: PlayingFieldConfig
   m_EditorClassIdentifier: 
   playingFieldModels:
-  - Cylindr: {fileID: 8892469167334591072, guid: ea82f92aca0350148a4246075d685f1c, type: 3}
-    CylindrTransfom: {fileID: 1579632641330355793, guid: ea82f92aca0350148a4246075d685f1c, type: 3}
-    Colums:
-    - {fileID: 4698436445353363031, guid: 7271ec6eabc069d44a3eb38e2d5dd8ba, type: 3}
-    - {fileID: 5157021544779190671, guid: 34e650c0897daf5438681bdcb0e65dea, type: 3}
+  - FieldPosition: {x: 9, y: 9.8, z: -6.7}
+    CurrentCoinPosition: {x: 4.8, y: -1.9, z: -7.5}
+    CylinderTransform: {fileID: 1579632641330355793, guid: 73f1d0da78fdebf46b31eece6aa14d85, type: 3}
+    LeftBoxTransform: {fileID: 8737915039279417533, guid: a6d8fbee939dd6b4790775182b41a8f8, type: 3}
+    RightBoxTransform: {fileID: 3877650005769487902, guid: 71c05e5e5cd66dd4ebe3f136de9997b8, type: 3}
+    PlaneTransform: {fileID: 8514527069991314080, guid: f5b72819c353b16419cc1d49143b6b18, type: 3}
+  - FieldPosition: {x: 7.5, y: 9.8, z: 0}
+    CurrentCoinPosition: {x: 5.9, y: -2.5, z: -14.4}
+    CylinderTransform: {fileID: 1579632641330355793, guid: ea82f92aca0350148a4246075d685f1c, type: 3}
+    LeftBoxTransform: {fileID: 8737915039279417533, guid: 7271ec6eabc069d44a3eb38e2d5dd8ba, type: 3}
+    RightBoxTransform: {fileID: 3877650005769487902, guid: 34e650c0897daf5438681bdcb0e65dea, type: 3}
+    PlaneTransform: {fileID: 8514527069991314080, guid: edf030f42aa047e45804945d0aee7f3d, type: 3}
+  - FieldPosition: {x: 6.1, y: 9.9, z: 4.45}
+    CurrentCoinPosition: {x: 7.1, y: -2.1, z: -19.7}
+    CylinderTransform: {fileID: 1579632641330355793, guid: 7041e609a0012fa49b34fc3101d93119, type: 3}
+    LeftBoxTransform: {fileID: 8737915039279417533, guid: 63f57e26fa1066241aa349b249441ef4, type: 3}
+    RightBoxTransform: {fileID: 3877650005769487902, guid: 26e1ecbfd81d5f74f89b26dfa3f2e792, type: 3}
+    PlaneTransform: {fileID: 8514527069991314080, guid: f648e117c5eaf3449aaa0ada9c23c597, type: 3}

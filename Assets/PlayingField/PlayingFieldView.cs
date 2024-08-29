@@ -12,8 +12,9 @@ public class PlayingFieldView : MonoBehaviour
     public CurrentCoinPointView CurrentCoinPoint => currentCoinPoint;
     
     [SerializeField] private GameObject cylinder;
-    [SerializeField] private GameObject left;
-    [SerializeField] private GameObject right;
+    [SerializeField] private GameObject leftBox;
+    [SerializeField] private GameObject rightBox;
+    [SerializeField] private GameObject plane;
     
     [SerializeField] private Transform colums;
     [SerializeField] private CoinSpawnView[] coinSpawPoint;
@@ -23,8 +24,21 @@ public class PlayingFieldView : MonoBehaviour
 
     private void ReInit(PlayingFieldModel item)
     {
-        cylinder.transform.localScale = item.CylindrTransfom.localScale;
-        cylinder.transform.rotation = item.CylindrTransfom.rotation;
+        cylinder.transform.localScale = item.CylinderTransform.localScale;
+        cylinder.transform.localPosition = item.CylinderTransform.localPosition;
+        cylinder.transform.rotation = item.CylinderTransform.rotation;
+        
+        leftBox.transform.localScale = item.LeftBoxTransform.localScale;
+        leftBox.transform.localPosition = item.LeftBoxTransform.localPosition;
+        leftBox.transform.rotation = item.LeftBoxTransform.rotation;
+        
+        rightBox.transform.localScale = item.RightBoxTransform.localScale;
+        rightBox.transform.localPosition = item.RightBoxTransform.localPosition;
+        rightBox.transform.rotation = item.RightBoxTransform.rotation;
+        
+        plane.transform.localScale = item.PlaneTransform.localScale;
+        plane.transform.localPosition = item.PlaneTransform.localPosition;
+        plane.transform.rotation = item.PlaneTransform.rotation;
     }
     public class  Pool : MonoMemoryPool<PlayingFieldModel,PlayingFieldView>
     {
@@ -32,7 +46,6 @@ public class PlayingFieldView : MonoBehaviour
         {
             item.ReInit(material);
             item.transform.position = item.position;
-
         }
     }
 }

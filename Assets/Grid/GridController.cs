@@ -486,7 +486,7 @@ namespace Grid
 
                 for (int j = 0; j < _currentGridModel.lineCount; j++)
                 {
-                    var cellPosition = _firstCellPosition + 3.8f * new Vector3(0, j, 0);
+                    var cellPosition = _currentGridModel.FirstCellPosionY + 3.8f * new Vector3(0, j, 0);
                     var newCell = _cellViewPool.Spawn(_gridConfig.GetMaterial(0));
                     newCell.transform.position = cellPosition;
 

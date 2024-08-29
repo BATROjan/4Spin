@@ -17,15 +17,18 @@ MonoBehaviour:
   - diffcultLevel: 0
     columnCount: 3
     lineCount: 4
-    CountCellsToWin: 2
+    CountCellsToWin: 3
+    FirstCellPosionY: {x: 0, y: -5.78, z: 0}
   - diffcultLevel: 1
     columnCount: 4
     lineCount: 6
     CountCellsToWin: 3
+    FirstCellPosionY: {x: 0, y: -9.58, z: 0}
   - diffcultLevel: 2
     columnCount: 5
     lineCount: 8
     CountCellsToWin: 4
+    FirstCellPosionY: {x: 0, y: -13.38, z: 0}
   _materials:
   - {fileID: 2100000, guid: df88bb5445136e54dadce60ea374c234, type: 2}
   - {fileID: 2100000, guid: 50591706c42594641abe45f4a0c6d52f, type: 2}

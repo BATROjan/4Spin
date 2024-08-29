@@ -55,6 +55,7 @@ public struct GridModel
     public int columnCount;
     public int lineCount;
     public int CountCellsToWin;
+    public Vector3 FirstCellPosionY;
 }
 
 public enum DiffcultLevel

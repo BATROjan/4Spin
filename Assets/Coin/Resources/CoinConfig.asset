@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   coinModel:
   - Material: {fileID: 2100000, guid: 67e2d054cdb98594bbb0e303640e554b, type: 2}
-    Color: {r: 0.90588236, g: 0.6323637, b: 0, a: 0}
+    Color: {r: 0.18503131, g: 0.90588236, b: 0, a: 0}
     NumberComand: 1
   - Material: {fileID: 2100000, guid: 5d080ded03829244196f06685c648e35, type: 2}
     Color: {r: 0.7224483, g: 0.16862744, b: 0.8784314, a: 0}

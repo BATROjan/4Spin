@@ -10,8 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2242967130388809909}
   - component: {fileID: 4125800490855347148}
-  - component: {fileID: 3539523996444696243}
-  - component: {fileID: 7691818073847420339}
   m_Layer: 0
   m_Name: ColumView
   m_TagString: Untagged
@@ -47,33 +45,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ColumTranform: {fileID: 2242967130388809909}
-  BoxCollider: {fileID: 3539523996444696243}
---- !u!65 &3539523996444696243
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4859180699375475117}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 0
-  serializedVersion: 2
-  m_Size: {x: 3.7401702, y: 22.662508, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!54 &7691818073847420339
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4859180699375475117}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 1
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
+  BoxCollider: {fileID: 0}
+  ColumID: 0

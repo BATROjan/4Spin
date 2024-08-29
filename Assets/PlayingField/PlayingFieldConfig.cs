@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace PlayingField
 {
@@ -16,8 +17,14 @@ namespace PlayingField
 
             switch (diffcultLevel)
             {
-                case DiffcultLevel.Normal:
+                case DiffcultLevel.Easy:
                     currenrModel = playingFieldModels[0];
+                    break;
+                case DiffcultLevel.Normal :
+                    currenrModel= playingFieldModels[1];
+                    break;
+                case DiffcultLevel.Hard :
+                    currenrModel= playingFieldModels[2];
                     break;
             }
             return currenrModel;
@@ -27,9 +34,11 @@ namespace PlayingField
     [Serializable]
     public struct PlayingFieldModel
     {
-        public GameObject Cylindr;
-        public Transform CylindrTransfom;
-        public GameObject[] Colums;
-        
+        public Vector3 FieldPosition;
+        public Vector3 CurrentCoinPosition;
+        public Transform CylinderTransform;
+        public Transform LeftBoxTransform;
+        public Transform RightBoxTransform;
+        public Transform PlaneTransform;
     }
 }

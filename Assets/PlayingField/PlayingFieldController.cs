@@ -23,8 +23,13 @@ namespace PlayingField
 
         public PlayingFieldView SpawnPlayingVew(DiffcultLevel diffcultLevel)
         {
-            var view = _playingFieldViewPool.Spawn(_playingFieldConfig.GetField(DiffcultLevel.Normal));
+            PlayingFieldModel model = _playingFieldConfig.GetField(diffcultLevel);
+            var view = _playingFieldViewPool.Spawn(model);
+            
+            view.CurrentCoinPoint.transform.localPosition = model.CurrentCoinPosition;
+            view.transform.position = model.FieldPosition;
             _playingFieldView = view;
+            
             return view;
         }
 
