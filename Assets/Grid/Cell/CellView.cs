@@ -43,6 +43,7 @@ namespace Grid.Cell
         private void Reinit(Material material)
         {
             meshRenderer.material = material;
+            _collider.enabled = true;
         }
 
         public class Pool : MonoMemoryPool<Material, CellView>

@@ -54,6 +54,8 @@ namespace Grid
         private bool isPvE;
         private bool isFistPlayer = true;
         private bool isWin;
+
+        private Tween rotationTween;
         public GridController(
             EnvironmentController environmentController,
             IUIService uiService,
@@ -238,6 +240,11 @@ namespace Grid
             DespawnColums();
             DespawCells();
             DespawnPlayingView();
+            
+            rotationTween.Kill();
+            rotationTween = null;
+            
+            OnSpinningIsDone?.Invoke();
         }
 
         public void RemoveCelFromList(CellView view)
@@ -284,8 +291,9 @@ namespace Grid
             {
                 FlipColumn(_currentColum.ColumID);
             }
-            
-            _currentColum.transform.DORotate(new Vector3(xValue, 0, 0), 3f, RotateMode.LocalAxisAdd)
+            rotationTween.Kill();
+            rotationTween = null;
+            rotationTween = _currentColum.transform.DORotate(new Vector3(xValue, 0, 0), 3f, RotateMode.LocalAxisAdd)
                 .OnComplete(()=>
                 {
                     СheckAllCells();
