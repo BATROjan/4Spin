@@ -27,6 +27,7 @@ namespace PlayingField
             var view = _playingFieldViewPool.Spawn(model);
             
             view.CurrentCoinPoint.transform.localPosition = model.CurrentCoinPosition;
+            view.CurrentCoinPoint.ChangeShowPosition(model.CurrentCoinPosition);
             view.transform.position = model.FieldPosition;
             _playingFieldView = view;
             

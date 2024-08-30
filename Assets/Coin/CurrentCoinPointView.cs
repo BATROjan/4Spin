@@ -16,5 +16,10 @@ namespace Coin
         {
             return hidePosition;
         }
+
+        public void ChangeShowPosition(Vector3 position)
+        {
+            ShowPosition = position;
+        }
     }
 }

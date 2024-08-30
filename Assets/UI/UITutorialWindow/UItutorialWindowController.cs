@@ -3,6 +3,7 @@ using Tutorial;
 using UI.UILevelSelectWindow;
 using UI.UISelectOpponetWindow;
 using UI.UIService;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace UI.UITutorialWindow
@@ -31,6 +32,9 @@ namespace UI.UITutorialWindow
         {
             currentStep = 0;
             Step(0);
+
+            _uiTutorialWindow.Buttons[0].gameObject.SetActive(false);
+ 
             InitButtons();
         }
         private void InitButtons()
@@ -57,6 +61,14 @@ namespace UI.UITutorialWindow
             if (currentStep<_tutorialConfig.GetCount()-1)
             {
                 currentStep++;
+                if (currentStep == _tutorialConfig.GetCount()-1)
+                {
+                    _uiTutorialWindow.Buttons[1].gameObject.SetActive(false);
+                }
+                else
+                {
+                    _uiTutorialWindow.Buttons[0].gameObject.SetActive(true);
+                }
                 Step(currentStep);
             }
         }
@@ -66,6 +78,14 @@ namespace UI.UITutorialWindow
             if (currentStep>0)
             {
                 currentStep--;
+                if (currentStep==0)
+                {
+                    _uiTutorialWindow.Buttons[0].gameObject.SetActive(false);
+                }
+                else
+                {
+                    _uiTutorialWindow.Buttons[1].gameObject.SetActive(true);
+                }
                 Step(currentStep);
             }
         }
