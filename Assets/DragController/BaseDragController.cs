@@ -26,6 +26,7 @@ namespace DragController
         protected bool isReadyToSpin;
 
         private readonly SliderController _sliderController;
+        private readonly AudioController.AudioController _audioController;
         private readonly EnvironmentController _environmentController;
         private readonly UIPlayingWindowController _uiPlayingWindowController;
         private readonly GridController _gridController;
@@ -36,6 +37,7 @@ namespace DragController
         private Collider2D _currentTriggerData;
 
         protected BaseDragController(
+            AudioController.AudioController audioController,
             EnvironmentController environmentController,
             UIPlayingWindowController uiPlayingWindowController,
             GridController gridController,
@@ -43,6 +45,7 @@ namespace DragController
             CameraController cameraController,
             TickableManager tickableManager)
         {
+            _audioController = audioController;
             _environmentController = environmentController;
             _uiPlayingWindowController = uiPlayingWindowController;
             _gridController = gridController;
@@ -133,6 +136,7 @@ namespace DragController
             _playingFieldController.SetActiveCoin(false);
 
             isReadyToSpin = true;
+            _audioController.Play(AudioType.Coin,1, false);
         }
 
         public void ClearAll()

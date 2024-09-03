@@ -1,3 +1,4 @@
+using AudioController;
 using Coin;
 using DragController;
 using Environment;
@@ -37,6 +38,9 @@ namespace Installer
                 .Install(Container);
             
             EnviromentInstaller
+                .Install(Container);
+            
+            AudioInstaller
                 .Install(Container);
             
             Container

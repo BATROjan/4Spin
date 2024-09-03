@@ -16,6 +16,7 @@ namespace DragController.MouseController
         private readonly PlayingFieldController _playingFieldController;
         
         public MouseDragController( 
+            AudioController.AudioController audioController,
             EnvironmentController environmentController,
             UIPlayingWindowController uiPlayingWindowController,
             GridController gridController,
@@ -23,6 +24,7 @@ namespace DragController.MouseController
             CameraController cameraController, 
             TickableManager tickableManager) 
             : base(
+                audioController,
                 environmentController,
                 uiPlayingWindowController,
                 gridController,

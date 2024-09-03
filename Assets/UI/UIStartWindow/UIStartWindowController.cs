@@ -7,13 +7,16 @@ namespace UI.UIStartWindow
 {
     public class UIStartWindowController
     {
+        private readonly AudioController.AudioController _audioController;
         private readonly IUIService _uiService;
 
         private UIStartWindow _uiStartWindow;
 
         public UIStartWindowController(
+            AudioController.AudioController audioController,
             IUIService uiService)
         {
+            _audioController = audioController;
             _uiService = uiService;
             _uiStartWindow = _uiService.Get<UIStartWindow>();
             
@@ -21,6 +24,7 @@ namespace UI.UIStartWindow
             _uiStartWindow.HideAction += UnSubscribeButtons;
 
             _uiService.Show<UIStartWindow>();
+            _audioController.Play(AudioType.Background, 1, true);
         }
 
         public void InitButtons()

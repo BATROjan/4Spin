@@ -53,8 +53,6 @@ namespace Grid.Cell
                 item.Reinit(material);
                 base.Reinitialize(material, item);
             }
-
-           
         }
     }
 }

@@ -11,6 +11,7 @@ namespace DragController.TouchController
     public class TouchController: BaseDragController
     {
         public TouchController(
+            AudioController.AudioController audioController,
             EnvironmentController environmentController,
             UIPlayingWindowController uiPlayingWindowController, 
             GridController gridController, 
@@ -18,6 +19,7 @@ namespace DragController.TouchController
             CameraController cameraController, 
             TickableManager tickableManager) : 
             base(
+                audioController,
                 environmentController,
                 uiPlayingWindowController, 
                 gridController, 

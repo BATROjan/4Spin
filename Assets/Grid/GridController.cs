@@ -18,6 +18,7 @@ namespace Grid
         public Action OnLastCoinIsSet;
         public Action OnSpinningIsDone;
 
+        private readonly AudioController.AudioController _audioController;
         private readonly EnvironmentController _environmentController;
         private readonly IUIService _uiService;
         private readonly SliderController _sliderController;
@@ -57,6 +58,7 @@ namespace Grid
 
         private Tween rotationTween;
         public GridController(
+            AudioController.AudioController audioController,
             EnvironmentController environmentController,
             IUIService uiService,
             SliderController sliderController,
@@ -67,6 +69,7 @@ namespace Grid
             GridConfig gridConfig
         )
         {
+            _audioController = audioController;
             _environmentController = environmentController;
             _uiService = uiService;
             _sliderController = sliderController;
@@ -293,6 +296,9 @@ namespace Grid
             }
             rotationTween.Kill();
             rotationTween = null;
+            var aaa = (float)xValue /180/ 11+0.1f;
+            _audioController.Play(AudioType.Flip,aaa,true, true);
+            
             rotationTween = _currentColum.transform.DORotate(new Vector3(xValue, 0, 0), 3f, RotateMode.LocalAxisAdd)
                 .OnComplete(()=>
                 {
