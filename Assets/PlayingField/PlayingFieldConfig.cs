@@ -37,8 +37,7 @@ namespace PlayingField
         public Vector3 FieldPosition;
         public Vector3 CurrentCoinPosition;
         public Transform CylinderTransform;
-        public Transform LeftBoxTransform;
-        public Transform RightBoxTransform;
-        public Transform PlaneTransform;
+        public Vector3 LeftSpherePosition;
+        public Vector3 RightSpherePosition;
     }
 }

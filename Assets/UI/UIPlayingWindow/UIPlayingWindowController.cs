@@ -35,7 +35,7 @@ namespace UI.UIPlayingWindow
         {
             _uiPlayingWindow.RulesText.text = 
                 "Собери "+
-                _gridConfig.GetGrid(_gameConfig.DiffcultLevel).CountCellsToWin + " монетки в ряд";
+                _gridConfig.GetGrid(_gameConfig.DiffcultLevel).CountCellsToWin + " монетки в ряд ";
             InitButtons();
         }
 
