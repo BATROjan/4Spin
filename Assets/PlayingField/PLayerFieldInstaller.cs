@@ -11,6 +11,12 @@ namespace PlayingField
                 .Bind<PlayingFieldConfig>()
                 .FromScriptableObjectResource("PLayingFieldConfig")
                 .AsSingle()
+                .NonLazy();  
+            
+            Container
+                .Bind<BackSpriteConfig>()
+                .FromScriptableObjectResource("BackSpriteConfig")
+                .AsSingle()
                 .NonLazy();
 
 
@@ -22,6 +28,10 @@ namespace PlayingField
             Container
                 .BindMemoryPool<PlayingFieldView, PlayingFieldView.Pool>()
                 .FromComponentInNewPrefabResource("PlayingFieldView");
+            
+            Container
+                .BindMemoryPool<BackSpriteView, BackSpriteView.Pool>()
+                .FromComponentInNewPrefabResource("BackSpriteView");
         }
     }
 }
