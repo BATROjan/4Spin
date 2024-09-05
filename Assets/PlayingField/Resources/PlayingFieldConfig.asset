@@ -19,7 +19,7 @@ MonoBehaviour:
     LeftSpherePosition: {x: -7.7, y: 0, z: 0}
     RightSpherePosition: {x: 4, y: 0, z: 0}
   - FieldPosition: {x: 7.5, y: 14.5, z: 15.3}
-    CurrentCoinPosition: {x: 2.44, y: -9.27, z: 25.98}
+    CurrentCoinPosition: {x: 2.44, y: -9.27, z: -25.98}
     CylinderTransform: {fileID: 1579632641330355793, guid: ea82f92aca0350148a4246075d685f1c, type: 3}
     LeftSpherePosition: {x: -8, y: 0, z: 0}
     RightSpherePosition: {x: 8, y: 0, z: 0}
