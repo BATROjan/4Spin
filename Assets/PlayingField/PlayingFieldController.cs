@@ -69,7 +69,7 @@ namespace PlayingField
             }
             else
             {
-                _blackTween = _backSpriteView.BlackSprite.DOFade(0, 0.5f);
+                _blackTween = _backSpriteView.BlackSprite.DOFade(0.3f, 0.5f);
             }
         }
 

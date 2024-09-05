@@ -50,9 +50,8 @@ namespace UI.UITutorialWindow
 
         private void Step(int id)
         {
-            Debug.Log(currentStep);
-            _uiTutorialWindow.Image.sprite = _tutorialConfig.GetModel(id).Sprite;
-            _uiTutorialWindow.Text.text = _tutorialConfig.GetModel(id).Text;
+            _uiTutorialWindow.Image.sprite = _tutorialConfig.GetStepModel(id).Sprite;
+            _uiTutorialWindow.Text.text = _tutorialConfig.GetStepModel(id).Text;
         }
         private void BackToMenu()
         {

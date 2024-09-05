@@ -1,4 +1,5 @@
 using PlayingField;
+using Tutorial;
 using UI.UILevelSelectWindow;
 using UI.UISelectOpponetWindow;
 using UI.UIService;
@@ -8,6 +9,7 @@ namespace UI.UIStartWindow
 {
     public class UIStartWindowController
     {
+        private readonly TutorialFieldController _tutorialFieldController;
         private readonly PlayingFieldController _playingFieldController;
         private readonly AudioController.AudioController _audioController;
         private readonly IUIService _uiService;
@@ -15,10 +17,12 @@ namespace UI.UIStartWindow
         private UIStartWindow _uiStartWindow;
 
         public UIStartWindowController(
+            TutorialFieldController tutorialFieldController,
             PlayingFieldController playingFieldController,
             AudioController.AudioController audioController,
             IUIService uiService)
         {
+            _tutorialFieldController = tutorialFieldController;
             _playingFieldController = playingFieldController;
             _audioController = audioController;
             _uiService = uiService;
@@ -35,6 +39,7 @@ namespace UI.UIStartWindow
         private void Show()
         {
             _playingFieldController.ActivateBlackBackground(false);
+            _tutorialFieldController.Spawn(DiffcultLevel.Normal);
             InitButtons();
         }
 
@@ -47,6 +52,7 @@ namespace UI.UIStartWindow
         private void StartTutorial()
         {
             _uiService.Hide<UIStartWindow>();
+            _tutorialFieldController.DestroyField();
             _playingFieldController.ActivateBlackBackground(true);
             _playingFieldController.ChangeBackSpritePosition(BackSpriteType.Rules);
             _playingFieldController.OnAnimationEnd += ShowTutor;
@@ -61,6 +67,7 @@ namespace UI.UIStartWindow
         private void HideWindowAnimation()
         { 
             _uiService.Hide<UIStartWindow>();
+            _tutorialFieldController.DestroyField();
             _playingFieldController.ChangeBackSpritePosition(BackSpriteType.SelectOpponentWindow);
             _playingFieldController.OnAnimationEnd += SelectLevel;
         }

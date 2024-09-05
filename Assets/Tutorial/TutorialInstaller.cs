@@ -11,6 +11,15 @@ namespace Tutorial
                 .FromScriptableObjectResource("TutorialConfig")
                 .AsSingle()
                 .NonLazy();
+            
+            Container
+                .Bind<TutorialFieldController>()
+                .AsSingle()
+                .NonLazy();
+
+            Container
+                .BindMemoryPool<TutorialFieldView, TutorialFieldView.Pool>()
+                .FromComponentInNewPrefabResource("PlayinField");   
         }
     }
 }

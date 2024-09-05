@@ -17,7 +17,7 @@ namespace PlayingField
 
             switch (diffcultLevel)
             {
-                case DiffcultLevel.Easy:
+                 case DiffcultLevel.Easy:
                     currenrModel = playingFieldModels[0];
                     break;
                 case DiffcultLevel.Normal :
