@@ -1,4 +1,5 @@
 ﻿using System;
+using PlayingField;
 using Tutorial;
 using UI.UILevelSelectWindow;
 using UI.UISelectOpponetWindow;
@@ -10,6 +11,7 @@ namespace UI.UITutorialWindow
 {
     public class UItutorialWindowController
     {
+        private readonly PlayingFieldController _playingFieldController;
         private readonly TutorialConfig _tutorialConfig;
         private readonly IUIService _uiService;
 
@@ -17,9 +19,11 @@ namespace UI.UITutorialWindow
         private int currentStep;
         
         public UItutorialWindowController(
+            PlayingFieldController playingFieldController,
             TutorialConfig tutorialConfig,
             IUIService uiService)
         {
+            _playingFieldController = playingFieldController;
             _tutorialConfig = tutorialConfig;
             _uiService = uiService;
             _uiTutorialWindow = _uiService.Get<UITutorialWindow>();
@@ -53,7 +57,17 @@ namespace UI.UITutorialWindow
         private void BackToMenu()
         {
             _uiService.Hide<UITutorialWindow>();
+            
+            _playingFieldController.ActivateBlackBackground(false);
+            _playingFieldController.ChangeBackSpritePosition(BackSpriteType.StartWindow);
+            
+            _playingFieldController.OnAnimationEnd += ShowStartWindow;
+        }
+
+        private void ShowStartWindow()
+        {
             _uiService.Show<UIStartWindow.UIStartWindow>();
+            _playingFieldController.OnAnimationEnd -= ShowStartWindow;
         }
 
         private void NextStep()

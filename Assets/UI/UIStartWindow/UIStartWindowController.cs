@@ -47,7 +47,15 @@ namespace UI.UIStartWindow
         private void StartTutorial()
         {
             _uiService.Hide<UIStartWindow>();
+            _playingFieldController.ActivateBlackBackground(true);
+            _playingFieldController.ChangeBackSpritePosition(BackSpriteType.Rules);
+            _playingFieldController.OnAnimationEnd += ShowTutor;
+        }
+
+        private void ShowTutor()
+        {
             _uiService.Show<UITutorialWindow.UITutorialWindow>();
+            _playingFieldController.OnAnimationEnd -= ShowTutor;
         }
 
         private void HideWindowAnimation()

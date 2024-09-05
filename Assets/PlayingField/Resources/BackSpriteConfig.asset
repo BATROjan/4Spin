@@ -12,4 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74c91a4f3d394e3e8dd8973d6065b6af, type: 3}
   m_Name: BackSpriteConfig
   m_EditorClassIdentifier: 
-  backSpriteModel: []
+  backSpriteModel:
+  - BackSpriteType: 0
+    Position: {x: 26.4, y: 15, z: 39.15}
+  - BackSpriteType: 3
+    Position: {x: -48.4, y: 15, z: 39.15}
+  - BackSpriteType: 4
+    Position: {x: 2.8, y: 15, z: 39.15}
+  - BackSpriteType: 1
+    Position: {x: 67, y: 15, z: 39.15}
+  - BackSpriteType: 2
+    Position: {x: 67, y: 15, z: 39.15}
