@@ -18,7 +18,7 @@ namespace Tutorial
                 .NonLazy();
 
             Container
-                .BindMemoryPool<TutorialFieldView, TutorialFieldView.Pool>()
+                .BindMemoryPool<TutorialBaseFieldView, TutorialBaseFieldView.Pool>()
                 .FromComponentInNewPrefabResource("PlayinField");   
         }
     }

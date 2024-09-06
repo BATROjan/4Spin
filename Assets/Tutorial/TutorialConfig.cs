@@ -15,9 +15,9 @@ namespace Tutorial
             return tutorStepModel[id];
         }
 
-        public TutorialFieldView GetView(DiffcultLevel diffcultLevel)
+        public TutorialBaseFieldView GetView(DiffcultLevel diffcultLevel)
         {
-            TutorialFieldView view = new TutorialFieldView();
+            TutorialBaseFieldView view = new TutorialBaseFieldView();
             
             foreach (var tutorView in tutorViewModels)
             {
@@ -45,6 +45,6 @@ namespace Tutorial
     public struct TutorViewModel
     {
         public DiffcultLevel DiffcultLevel;
-        public TutorialFieldView View;
+        public TutorialBaseFieldView View;
     }
 }
