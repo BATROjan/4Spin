@@ -82,5 +82,9 @@ namespace GameController
         {
             _gameConfig.IsPvE = value;
         }
+        public bool GetPvE()
+        {
+            return _gameConfig.IsPvE;
+        }
     }
 }
