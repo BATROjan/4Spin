@@ -6,22 +6,22 @@ namespace Tutorial
 {
     public class TutorialFieldController
     {
-        private readonly TutorialConfig _tutorialConfig;
+        public TutorialBaseFieldView TutorialBaseFieldView => _tutorialBaseFieldView;
         private readonly TutorialBaseFieldView.Pool _tutorialFielPool;
 
         private TutorialBaseFieldView _tutorialBaseFieldView;
         
         public TutorialFieldController(
-            TutorialConfig tutorialConfig,
             TutorialBaseFieldView.Pool tutorialFielPool)
         {
-            _tutorialConfig = tutorialConfig;
             _tutorialFielPool = tutorialFielPool;
         }
 
         public void Spawn(DiffcultLevel diffcultLevel)
         {
           _tutorialBaseFieldView = _tutorialFielPool.Spawn(diffcultLevel);
+          
+          _tutorialBaseFieldView.transform.localScale = Vector3.one;
           RotateColum();
         }
         public void DestroyField()
@@ -34,13 +34,15 @@ namespace Tutorial
         {
             if (_tutorialBaseFieldView)
             {
-                float aaa = Random.Range(0.3f, 2.4f);
-                int bbb = Random.Range(0, _tutorialBaseFieldView.CurrentView.ColumVews.Length - 1);
+                float delay = Random.Range(0.3f, 2.4f);
+                int id = Random.Range(0, _tutorialBaseFieldView.CurrentView.ColumVews.Length - 1);
 
-                ColumVew columVew = _tutorialBaseFieldView.CurrentView.ColumVews[bbb];
-                DOVirtual.DelayedCall(aaa, () =>
+                ColumVew columVew = _tutorialBaseFieldView.CurrentView.ColumVews[id];
+                DOVirtual.DelayedCall(delay, () =>
                 {
-                    columVew.transform.DORotate(new Vector3(360, 0, 0), 3f, RotateMode.LocalAxisAdd)
+                    int part = Random.Range(1, 6)/2;
+                    int angle = part*360;
+                    columVew.transform.DORotate(new Vector3(angle, 0, 0), part, RotateMode.LocalAxisAdd)
                         .OnComplete(() => RotateColum());
                 });
             }
