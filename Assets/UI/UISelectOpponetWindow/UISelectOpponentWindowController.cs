@@ -29,8 +29,31 @@ namespace UI.UISelectOpponetWindow
             _uiService = uiService;
             _uiSelectOpponentWindow = _uiService.Get<UISelectOpponentWindow>();
 
-            _uiSelectOpponentWindow.ShowAction += InitButtons;
+            _uiSelectOpponentWindow.ShowAction += Show;
             _uiSelectOpponentWindow.HideAction += Hide;
+        }
+
+        private void Show()
+        {
+            InitButtons();
+            PrepearWindow();
+        }
+
+        private void PrepearWindow()
+        {
+            for (int i = 0; i <   _uiSelectOpponentWindow.Oponents.Length; i++)
+            {
+                _uiSelectOpponentWindow.Oponents[i].transform.localScale = Vector3.one;
+                foreach (var image in _uiSelectOpponentWindow.Oponents[0].Images)
+                {
+                    var color = image.color;
+                    color.a = 1;
+                    image.color = color;
+                }
+            }
+
+            currentOponentView = null;
+            notCurrentOponentView = null;
         }
 
         private void Hide()
@@ -148,6 +171,11 @@ namespace UI.UISelectOpponetWindow
         private void ShowWindow()
         {
             _uiService.Show<UIlevelSelectWindow>();
+            
+            _uiSelectOpponentWindow.Buttons[2].gameObject.SetActive(false); 
+            _uiSelectOpponentWindow.Buttons[3].gameObject.SetActive(false); 
+            ShowProveButtons(false);
+            
             UISubscribeButtons();
             _playingFieldController.OnAnimationEnd -= ShowWindow;
         }
