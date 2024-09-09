@@ -469,7 +469,7 @@ namespace Grid
                             {
                                 _uiService.Show<UIWinWindowView>();
                                 _uiService.Hide<UIPlayingWindowView>();
-                                var text = "Победа " + coin.NumberComand + " команды";
+                                var text = "Победа " + System.Environment.NewLine + coin.NumberComand + " команды";
                                 _uiWinWindowView.WinText.text = text;
                             });
 
