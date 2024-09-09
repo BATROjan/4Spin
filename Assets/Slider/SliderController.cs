@@ -15,8 +15,14 @@ namespace Slider
         
         private float _startFloatValue;
         private float _currentSliderValue;
+        private float _rotateAnimationTime = 1;
+
+        private int _rotateAngle = 180;
+        private Vector3 _startAngle = new Vector3(0,0,90);
         private bool _startBoolValue;
-        private Tween _animationTween;
+        
+        private Tween _arrowAnimationTween;
+        private Tween _sliderAnimationTween;
         
         public void SetSliderView(SliderView view)
         {
@@ -28,7 +34,7 @@ namespace Slider
             if (value)
             {
                 InitButtons();
-                SetStartValue();
+                PrepearPanel();
                 
                 _sliderView.RectTransforms.DOAnchorPos(_sliderView.Positions[0], _animationTime)
                     .OnComplete(() => StartSliding(_startBoolValue));
@@ -47,18 +53,29 @@ namespace Slider
 
         public void StartSliding(bool value)
         {
-          _animationTween.Kill();
-          _animationTween = null;
+          _arrowAnimationTween.Kill();
+          _sliderAnimationTween.Kill();
           
+          _arrowAnimationTween = null;
+          _sliderAnimationTween = null;
+
           if (value)
           {
-              _animationTween = _sliderView.SliderImage.DOFillAmount(1, 1)
-                  .OnComplete(() => StartSliding(!value));
+              _sliderAnimationTween = _sliderView.InvisSliderImage
+                  .DOFillAmount(0, _rotateAnimationTime).SetEase(Ease.Linear);
+              
+              _arrowAnimationTween = _sliderView.SliderArrow.transform
+                  .DOLocalRotate(new Vector3(0,0,180), _rotateAnimationTime, RotateMode.LocalAxisAdd)
+                  .SetEase(Ease.Linear).OnComplete(() => StartSliding(!value));
           }
           else
           {
-              _animationTween = _sliderView.SliderImage.DOFillAmount(0, 1)
-                  .OnComplete(() => StartSliding(!value));
+              _sliderAnimationTween = _sliderView.InvisSliderImage
+                  .DOFillAmount(1, _rotateAnimationTime).SetEase(Ease.Linear);
+              
+              _arrowAnimationTween = _sliderView.SliderArrow.transform
+                  .DOLocalRotate(new Vector3(0,0,-180), _rotateAnimationTime, RotateMode.LocalAxisAdd)
+                  .SetEase(Ease.Linear).OnComplete(() => StartSliding(!value));
           }
         }
 
@@ -68,7 +85,7 @@ namespace Slider
             {
                 _currentSliderValue = Random.Range(2,4);
             }
-            if (_currentSliderValue == 10)
+            if (_currentSliderValue > 9)
             {
                 _currentSliderValue = Random.Range(9, 11);
             }
@@ -83,9 +100,13 @@ namespace Slider
 
         private void CheckSliderValue()
         {
-            _currentSliderValue = _sliderView.SliderImage.fillAmount * 10;
-            _animationTween.Kill();
-            _animationTween = null;
+            _currentSliderValue = _sliderView.InvisSliderImage.fillAmount * 10;
+            
+            _arrowAnimationTween.Kill();
+            _sliderAnimationTween.Kill();
+          
+            _arrowAnimationTween = null;
+            _sliderAnimationTween = null;
             
             ShowAnimation(false);
             OnGetReadyToSpin?.Invoke();
@@ -98,10 +119,13 @@ namespace Slider
             _sliderView.UIButtons[0].OnClick -= CheckSliderValue;
         }
 
-        private void SetStartValue()
+        private void PrepearPanel()
         {
-            _startFloatValue = 2.5f;
-            _sliderView.SliderImage.fillAmount = _startFloatValue/5;
+            var rotation = _sliderView.SliderArrow.transform.rotation;
+            rotation.eulerAngles = _startAngle;
+            _sliderView.SliderArrow.transform.rotation = rotation;
+
+            _sliderView.InvisSliderImage.fillAmount = 0;
         }
     }
 }
