@@ -403,11 +403,12 @@ namespace Grid
                 CheckCell(j, i);
             }
             
-            _lightsCellViewsList.Clear();
+            
             for (int f = 0; f < _currentGridModel.columnCount; f++)
             {
                 _currentCoinLeght = 0;
                 var offset = f;
+                _lightsCellViewsList.Clear();
                 for (int i = 0 ; i < _currentGridModel.columnCount; i++)
                 {
                     int j = i + offset;
@@ -431,12 +432,12 @@ namespace Grid
                 CheckCell(j, i);
             }
             
-            _lightsCellViewsList.Clear();
+            
             for (int f = 0; f < _currentGridModel.columnCount; f++)
             {
                 _currentCoinLeght = 0;
                 var offset = f;
-                
+                _lightsCellViewsList.Clear();
                 for (int j = _currentGridModel.lineCount - 1-offset; j >= 0; j--)
                 {
                     int i = _currentGridModel.lineCount - 1 - j- offset;
