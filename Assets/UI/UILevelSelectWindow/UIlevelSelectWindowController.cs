@@ -32,9 +32,22 @@ namespace UI.UILevelSelectWindow
             _uiService = uiService;
             
             _uiSelectWindow = _uiService.Get<UIlevelSelectWindow>();
-            _uiSelectWindow.ShowAction += InitButtons;
+            _uiSelectWindow.ShowAction += Show;
             _uiSelectWindow.HideAction += UnSubscribeButtons;
         }
+
+        private void Show()
+        {
+            PrepearWindow();
+            InitButtons();
+        }
+
+        private void PrepearWindow()
+        {
+            ActivateGridsButton(true);
+            ActivateSelectButtons(false);
+        }
+
         public void InitButtons()
         {
             for (int i = 0; i < 3; i++)
