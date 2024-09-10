@@ -748,7 +748,7 @@ MonoBehaviour:
   buttons:
   - {fileID: 2249709898870468307}
   - {fileID: 6561859622890517193}
-  - {fileID: 0}
+  - {fileID: 7058341228114158870}
   traingleImage: {fileID: 0}
 --- !u!1 &6712510467255265116
 GameObject:

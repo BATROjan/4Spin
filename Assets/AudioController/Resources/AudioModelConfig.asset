@@ -13,15 +13,18 @@ MonoBehaviour:
   m_Name: AudioModelConfig
   m_EditorClassIdentifier: 
   audioModels:
-  - Type: 0
-    AudioClip: {fileID: 8300000, guid: a80e13c8975193c448c2e2e558c0a628, type: 3}
-    Loop: 1
-    Volume: 0.5
   - Type: 1
+    GroupType: 1
     AudioClip: {fileID: 8300000, guid: 46f3f849ded223d4392065ec8195ce25, type: 3}
     Loop: 0
     Volume: 1
   - Type: 2
+    GroupType: 1
     AudioClip: {fileID: 8300000, guid: 44b5fc45d26c0454591a533b541bdcd0, type: 3}
     Loop: 1
     Volume: 1
+  - Type: 0
+    GroupType: 0
+    AudioClip: {fileID: 8300000, guid: a80e13c8975193c448c2e2e558c0a628, type: 3}
+    Loop: 1
+    Volume: 0.89584816

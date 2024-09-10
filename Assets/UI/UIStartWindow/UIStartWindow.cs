@@ -9,7 +9,6 @@ namespace UI.UIStartWindow
         public UIButton[] Buttons => buttons;
         
         [SerializeField] private UIButton[] buttons;
-        [SerializeField] private Image traingleImage;
 
         public override void Show()
         {

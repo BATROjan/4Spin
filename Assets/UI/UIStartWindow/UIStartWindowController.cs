@@ -3,6 +3,7 @@ using Tutorial;
 using UI.UILevelSelectWindow;
 using UI.UISelectOpponetWindow;
 using UI.UIService;
+using UI.UISettingsWindow;
 using UnityEngine.EventSystems;
 
 namespace UI.UIStartWindow
@@ -47,6 +48,22 @@ namespace UI.UIStartWindow
         {
             _uiStartWindow.Buttons[0].OnClick += HideWindowAnimation;
             _uiStartWindow.Buttons[1].OnClick += StartTutorial;
+            _uiStartWindow.Buttons[2].OnClick += OpenSettings;
+        }
+
+        private void OpenSettings()
+        {
+            _uiService.Hide<UIStartWindow>();
+            _tutorialFieldController.DestroyField();
+            _playingFieldController.ActivateBlackBackground(false);
+            _playingFieldController.ChangeBackSpritePosition(BackSpriteType.Setting);
+            _playingFieldController.OnAnimationEnd += ShowSettings;
+        }
+
+        private void ShowSettings()
+        {
+            _uiService.Show<UISettingsWindowView>();
+            _playingFieldController.OnAnimationEnd -= ShowSettings;
         }
 
         private void StartTutorial()
@@ -82,6 +99,7 @@ namespace UI.UIStartWindow
         {
             _uiStartWindow.Buttons[0].OnClick -= HideWindowAnimation;
             _uiStartWindow.Buttons[1].OnClick -= StartTutorial;
+            _uiStartWindow.Buttons[2].OnClick -= OpenSettings;
         }
     }
 }

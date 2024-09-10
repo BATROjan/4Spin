@@ -1,4 +1,5 @@
-﻿using UI.UILevelSelectWindow;
+﻿using DG.Tweening;
+using UI.UILevelSelectWindow;
 using UI.UIPlayingWindow;
 using UI.UIService;
 
@@ -6,28 +7,51 @@ namespace UI.UIPauseGameWindow
 {
     public class UIPauseGameWindowController
     {
+        private readonly AudioController.AudioController _audioController;
         private readonly GameController.GameController _gameController;
         private readonly IUIService _uiService;
 
         private UIPauseGameWindow _uiPauseGameWindow;
         
         public UIPauseGameWindowController(
+            AudioController.AudioController audioController,
             GameController.GameController gameController,
             IUIService uiService)
         {
+            _audioController = audioController;
             _gameController = gameController;
             _uiService = uiService;
             
             _uiPauseGameWindow = _uiService.Get<UIPauseGameWindow>();
-            _uiPauseGameWindow.ShowAction += InitButtons;
-            _uiPauseGameWindow.HideAction += UnSubscribeButtons;
+            _uiPauseGameWindow.ShowAction += Show;
+            _uiPauseGameWindow.HideAction += Hide;
+        }
+
+        private void Show()
+        {
+            _audioController.ActivateMuteEffect(true);
+            _gameController.TimeControll(false);
+            InitButtons();
+        }
+
+        private void Hide()
+        {
+            _audioController.ActivateMuteEffect(false);
+            _gameController.TimeControll(true);
+            
+            UnSubscribeButtons();
         }
 
         private void InitButtons()
         {
-            _gameController.TimeControll(false);
             _uiPauseGameWindow.Buttons[0].OnClick += ReturnToMenu;
             _uiPauseGameWindow.Buttons[1].OnClick += ResumeGame;
+        }
+
+        private void ShowSettings()
+        {
+            _uiService.Show<UISettingsWindow.UISettingsWindowView>();
+            _uiService.Hide<UIPauseGameWindow>();
         }
 
         private void ResumeGame()
@@ -45,7 +69,6 @@ namespace UI.UIPauseGameWindow
 
         private void UnSubscribeButtons()
         {
-            _gameController.TimeControll(true);
             _uiPauseGameWindow.Buttons[0].OnClick -= ReturnToMenu;
             _uiPauseGameWindow.Buttons[1].OnClick -= ResumeGame;
         }

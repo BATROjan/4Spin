@@ -12,7 +12,6 @@ namespace AudioController
         private List<AudioView> _listAudioView = new List<AudioView>();
         private Dictionary<AudioType, AudioView> _dictionary = new Dictionary<AudioType, AudioView>();
         
-        
         public AudioController(
             AudioModelConfig audioModelConfig,
             AudioView.Pool audioPool)
@@ -22,7 +21,7 @@ namespace AudioController
         }
         public void Play(AudioType nameSound,float pitchValue, bool isLoop = false, bool isFlip = false)
         {
-            var audio = _audioPool.Spawn(new AudioProtocol(_audioModelConfig.GetAudioModel(nameSound)));
+            var audio = _audioPool.Spawn(new AudioProtocol(_audioModelConfig.GetAudioModelByType(nameSound)));
             audio.AudioSource.pitch = pitchValue;
             audio.AudioSource.Play();
         
@@ -57,10 +56,23 @@ namespace AudioController
             _dictionary.Remove(nameSound);
         }
 
-        public AudioView GetAudio(AudioType type)
+        public void ChangeVolume(float volume)
         {
-            var audio = _audioPool.Spawn(new AudioProtocol(_audioModelConfig.GetAudioModel(type)));
-            return audio;
+            foreach (var audio in _listAudioView)
+            {
+                audio.AudioSource.volume = volume;
+            }
+        }
+
+        public void ActivateMuteEffect(bool value)
+        {
+            foreach (var audio in _listAudioView)
+            {
+                if (audio.GroupType == AudioGroupType.Effect)
+                {
+                    audio.AudioSource.mute = value;
+                }
+            }
         }
     }
 }

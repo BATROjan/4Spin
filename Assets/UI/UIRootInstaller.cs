@@ -3,6 +3,7 @@ using UI.UIPauseGameWindow;
 using UI.UIPlayingWindow;
 using UI.UISelectOpponetWindow;
 using UI.UIService;
+using UI.UISettingsWindow;
 using UI.UIStartWindow;
 using UI.UITutorialWindow;
 using UI.UIWinWindow;
@@ -31,10 +32,14 @@ namespace UI
             
             UITutorialWindowInstaller
                 .Install(Container);
+
+            UISettingsInstaller
+                .Install(Container);
             
             UIPauseGameInstaller
                 .Install(Container);
-            
+
+
             Container.Bind<IUIRoot>()
                 .FromComponentInNewPrefabResource("UIRoot")
                 .AsSingle()
