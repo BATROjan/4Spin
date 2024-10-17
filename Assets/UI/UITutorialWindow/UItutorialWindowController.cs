@@ -38,6 +38,7 @@ namespace UI.UITutorialWindow
             Step(0);
 
             _uiTutorialWindow.Buttons[0].gameObject.SetActive(false);
+            _uiTutorialWindow.Buttons[1].gameObject.SetActive(true);
  
             InitButtons();
         }
