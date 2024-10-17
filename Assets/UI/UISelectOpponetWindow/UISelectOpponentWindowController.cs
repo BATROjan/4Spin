@@ -67,7 +67,22 @@ namespace UI.UISelectOpponetWindow
             _uiSelectOpponentWindow.Buttons[1].OnClick += SelectPlayer;
             _uiSelectOpponentWindow.Buttons[2].OnClick += BackToSelect;
             _uiSelectOpponentWindow.Buttons[3].OnClick += SelectOpponent;
+            _uiSelectOpponentWindow.Buttons[4].OnClick += BackToMenu;
 
+        }
+
+        private void BackToMenu()
+        {
+            _uiService.Hide<UISelectOpponentWindow>();
+            _playingFieldController.ChangeBackSpritePosition(BackSpriteType.StartWindow );
+            
+            _uiService.Show<UIStartWindow.UIStartWindow>();
+            
+            _uiSelectOpponentWindow.Buttons[2].gameObject.SetActive(false); 
+            _uiSelectOpponentWindow.Buttons[3].gameObject.SetActive(false); 
+            ShowProveButtons(false);
+            
+            UISubscribeButtons();
         }
 
         private void SelectPlayer()
@@ -186,6 +201,7 @@ namespace UI.UISelectOpponetWindow
             _uiSelectOpponentWindow.Buttons[1].OnClick -= SelectPlayer;
             _uiSelectOpponentWindow.Buttons[2].OnClick -= BackToSelect;
             _uiSelectOpponentWindow.Buttons[3].OnClick -= SelectOpponent;
+            _uiSelectOpponentWindow.Buttons[4].OnClick -= BackToMenu;
         }
     }
 }
