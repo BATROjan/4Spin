@@ -243,6 +243,9 @@ namespace Grid
             DespawnColums();
             DespawCells();
             DespawnPlayingView();
+
+            _sliderController.KillAnimationTween();
+            _sliderController.ShowAnimation(false);
             
             rotationTween.Kill();
             rotationTween = null;

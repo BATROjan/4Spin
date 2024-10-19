@@ -28,7 +28,12 @@ namespace UI.UIPlayingWindow
             _sliderController.SetSliderView(_uiPlayingWindow.SliderPanel);
             
             _uiPlayingWindow.ShowAction += Show;
-            _uiPlayingWindow.HideAction += UnSubscribeButtons;
+            _uiPlayingWindow.HideAction += Hide;
+        }
+
+        private void Hide()
+        {
+            UnSubscribeButtons();
         }
 
         private void Show()
@@ -36,6 +41,7 @@ namespace UI.UIPlayingWindow
             _uiPlayingWindow.RulesText.text = 
                 "Собери "+
                 _gridConfig.GetGrid(_gameConfig.DiffcultLevel).CountCellsToWin + " монетки в ряд ";
+            
             InitButtons();
         }
 

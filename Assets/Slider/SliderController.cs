@@ -53,13 +53,9 @@ namespace Slider
 
         public void StartSliding(bool value)
         {
-          _arrowAnimationTween.Kill();
-          _sliderAnimationTween.Kill();
-          
-          _arrowAnimationTween = null;
-          _sliderAnimationTween = null;
+            KillAnimationTween();
 
-          if (value)
+            if (value)
           {
               _sliderAnimationTween = _sliderView.InvisSliderImage
                   .DOFillAmount(0, _rotateAnimationTime).SetEase(Ease.Linear);
@@ -91,6 +87,15 @@ namespace Slider
             }
             
             return _currentSliderValue;
+        }
+
+        public void KillAnimationTween()
+        {
+            _arrowAnimationTween.Kill();
+            _sliderAnimationTween.Kill();
+          
+            _arrowAnimationTween = null;
+            _sliderAnimationTween = null;
         }
 
         private void InitButtons()
