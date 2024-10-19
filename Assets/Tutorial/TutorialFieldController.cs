@@ -19,15 +19,18 @@ namespace Tutorial
 
         public void Spawn(DiffcultLevel diffcultLevel)
         {
-          _tutorialBaseFieldView = _tutorialFielPool.Spawn(diffcultLevel);
+            _tutorialBaseFieldView = _tutorialFielPool.Spawn(diffcultLevel);
           
-          _tutorialBaseFieldView.transform.localScale = Vector3.one;
-          RotateColum();
+            _tutorialBaseFieldView.transform.localScale = Vector3.one;
+            RotateColum();
         }
         public void DestroyField()
         {
-            _tutorialBaseFieldView.DestoyView();
-            _tutorialFielPool.Despawn(_tutorialBaseFieldView);
+            if (_tutorialBaseFieldView.CurrentView)
+            {
+                _tutorialBaseFieldView.DestoyView();
+                _tutorialFielPool.Despawn(_tutorialBaseFieldView);
+            }
         }
 
         public void RotateColum()

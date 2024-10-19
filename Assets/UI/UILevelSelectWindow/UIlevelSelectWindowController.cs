@@ -56,6 +56,22 @@ namespace UI.UILevelSelectWindow
             }
             _uiSelectWindow.Buttons[3].OnClick += BackToSelect;
             _uiSelectWindow.Buttons[4].OnClick += SelectGrid;
+            _uiSelectWindow.Buttons[5].OnClick += BackToSelectWindow;
+        }
+
+        private void BackToSelectWindow()
+        {
+            _tutorialFieldController.DestroyField();
+            _uiService.Hide<UIlevelSelectWindow>();
+            
+            _playingFieldController.ChangeBackSpritePosition(BackSpriteType.SelectOpponentWindow);
+            _playingFieldController.OnAnimationEnd += ShowSelectWindow;
+        }
+
+        private void ShowSelectWindow()
+        {
+            _uiService.Show<UISelectOpponetWindow.UISelectOpponentWindow>();
+            _playingFieldController.OnAnimationEnd -= ShowSelectWindow;
         }
 
         private void BackToSelect()
@@ -103,14 +119,14 @@ namespace UI.UILevelSelectWindow
             _uiService.Hide<UIlevelSelectWindow>();
             
             _playingFieldController.ChangeBackSpritePosition(BackSpriteType.StartWindow);
-            _playingFieldController.OnAnimationEnd += ShowWindow;
+            _playingFieldController.OnAnimationEnd += ShowPlayWindow;
         }
 
-        private void ShowWindow()
+        private void ShowPlayWindow()
         {
             _gameController.StartGame(_gameConfig.DiffcultLevel);
             _uiService.Show<UIPlayingWindowView>();
-            _playingFieldController.OnAnimationEnd -= ShowWindow;
+            _playingFieldController.OnAnimationEnd -= ShowPlayWindow;
         }
 
         public void UnSubscribeButtons()
@@ -121,6 +137,7 @@ namespace UI.UILevelSelectWindow
             }
             _uiSelectWindow.Buttons[3].OnClick -= BackToSelect;
             _uiSelectWindow.Buttons[4].OnClick -= SelectGrid;
+            _uiSelectWindow.Buttons[5].OnClick -= BackToSelectWindow;
         }
     }
 }

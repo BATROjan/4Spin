@@ -44,11 +44,9 @@ namespace UI.UISelectOpponetWindow
             for (int i = 0; i <   _uiSelectOpponentWindow.Oponents.Length; i++)
             {
                 _uiSelectOpponentWindow.Oponents[i].transform.localScale = Vector3.one;
-                foreach (var image in _uiSelectOpponentWindow.Oponents[0].Images)
+                foreach (var image in _uiSelectOpponentWindow.Oponents[i].Images)
                 {
-                    var color = image.color;
-                    color.a = 1;
-                    image.color = color;
+                    image.DOFade(1, 0);
                 }
             }
 
@@ -75,13 +73,18 @@ namespace UI.UISelectOpponetWindow
         {
             _uiService.Hide<UISelectOpponentWindow>();
             _playingFieldController.ChangeBackSpritePosition(BackSpriteType.StartWindow );
-            
+            _playingFieldController.OnAnimationEnd += ShowStartWindow;
+        }
+
+        private void ShowStartWindow()
+        {
             _uiService.Show<UIStartWindow.UIStartWindow>();
             
             _uiSelectOpponentWindow.Buttons[2].gameObject.SetActive(false); 
             _uiSelectOpponentWindow.Buttons[3].gameObject.SetActive(false); 
             ShowProveButtons(false);
             
+            _playingFieldController.OnAnimationEnd -= ShowStartWindow;
             UISubscribeButtons();
         }
 
@@ -156,7 +159,6 @@ namespace UI.UISelectOpponetWindow
                 {
                     ShowProveButtons(false);
                     isProveButtonsActicate = false;
-
                 });
                 
             }
