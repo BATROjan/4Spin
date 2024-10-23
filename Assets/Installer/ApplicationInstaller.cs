@@ -7,6 +7,7 @@ using Grid;
 using PlayingField;
 using Tutorial;
 using UI;
+using XMLSystem;
 using Zenject;
 
 namespace Installer
@@ -15,6 +16,9 @@ namespace Installer
     {
         public override void InstallBindings()
         {
+            XMLSystemInstaller
+                .Install(Container);
+            
             CameraInstaller
                 .CameraInstaller
                 .Install(Container);

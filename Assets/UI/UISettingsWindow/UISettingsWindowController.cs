@@ -3,24 +3,28 @@ using System.Collections.Generic;
 using PlayingField;
 using UI.UIService;
 using UnityEngine;
+using XMLSystem;
 
 namespace UI.UISettingsWindow
 {
     public class UISettingsWindowController
     {
+        private readonly IXMLSystem _xmlSystem;
         private readonly PlayingFieldController _playingFieldController;
         private readonly AudioController.AudioController _audioController;
         private readonly AudioModelConfig _audioModelConfig;
         private readonly IUIService _uiService;
         
         private UISettingsWindowView _settingsWindowView;
-        private List<AudioModel> aaa = new List<AudioModel>();
+
         public UISettingsWindowController(
+            IXMLSystem xmlSystem,
             PlayingFieldController playingFieldController,
             AudioController.AudioController audioController,
             AudioModelConfig audioModelConfig,
             IUIService uiService)
         {
+            _xmlSystem = xmlSystem;
             _playingFieldController = playingFieldController;
             _audioController = audioController;
             _audioModelConfig = audioModelConfig;
@@ -59,10 +63,11 @@ namespace UI.UISettingsWindow
         {
             var volume = (float)Math.Round(_settingsWindowView.Sliders[0].value, 2);
             _audioModelConfig.SetAudioVolumeByGroup(AudioGroupType.Main, volume);
+            _xmlSystem.SaveSoundValueToXML(AudioGroupType.Main, volume.ToString());
             
             volume = (float)Math.Round(_settingsWindowView.Sliders[1].value, 2);
             _audioModelConfig.SetAudioVolumeByGroup(AudioGroupType.Effect, volume);
-  
+            _xmlSystem.SaveSoundValueToXML(AudioGroupType.Effect, volume.ToString());
         }
 
         public void ChangeMainValue()

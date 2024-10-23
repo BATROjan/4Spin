@@ -48,10 +48,11 @@ public class AudioModelConfig : ScriptableObject
     {
         foreach (var model in audioModels)
         {
+            
             _dictAudioModels.Add(model.Type, model);
         }
 
-        _inited = !_inited;
+        _inited = true;
     }
 }
 

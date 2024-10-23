@@ -1,11 +1,13 @@
 ﻿using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
+using XMLSystem;
 
 namespace AudioController
 {
     public class AudioController
     {
+        private readonly IXMLSystem _xmlSystem;
         private readonly AudioModelConfig _audioModelConfig;
         private readonly AudioView.Pool _audioPool;
         
@@ -13,11 +15,18 @@ namespace AudioController
         private Dictionary<AudioType, AudioView> _dictionary = new Dictionary<AudioType, AudioView>();
         
         public AudioController(
+            IXMLSystem xmlSystem,
             AudioModelConfig audioModelConfig,
             AudioView.Pool audioPool)
         {
+            _xmlSystem = xmlSystem;
             _audioModelConfig = audioModelConfig;
             _audioPool = audioPool;
+
+            audioModelConfig.SetAudioVolumeByGroup(AudioGroupType.Effect, 
+                float.Parse(_xmlSystem.LoadFromXML(AudioGroupType.Effect.ToString(), "value")));
+            audioModelConfig.SetAudioVolumeByGroup(AudioGroupType.Main,
+                float.Parse(_xmlSystem.LoadFromXML(AudioGroupType.Main.ToString(), "value")));
         }
         public void Play(AudioType nameSound,float pitchValue, bool isLoop = false, bool isFlip = false)
         {
