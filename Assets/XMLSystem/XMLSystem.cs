@@ -79,9 +79,17 @@ namespace XMLSystem
                 xmlDoc.AppendChild(rootNode);
             }
             
-            var elem = xmlDoc.CreateElement(type.ToString());
-            elem.SetAttribute("value", value);
-            rootNode.AppendChild(elem);
+            var node = xmlDoc.SelectSingleNode($"/{SaveNodeName}/{type}");
+            if (node != null)
+            {
+                node.Attributes["value"].Value = value;
+            }
+            else
+            {
+                var elem = xmlDoc.CreateElement(type.ToString());
+                elem.SetAttribute("value", value);
+                rootNode.AppendChild(elem);
+            }
             
             xmlDoc.Save(_savePath + _xmlConfig.SaveName);
         }
