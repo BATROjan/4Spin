@@ -69,7 +69,8 @@ public enum AudioType
 {
     Background,
     Coin,
-    Flip
+    Flip,
+    Win
 }
 public enum AudioGroupType
 {

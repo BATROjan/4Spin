@@ -474,6 +474,7 @@ namespace Grid
                                 _uiService.Show<UIWinWindowView>();
                                 _uiService.Hide<UIPlayingWindowView>();
                                 var text = "Победа " + System.Environment.NewLine + coin.NumberComand + " команды";
+                                _audioController.Play(AudioType.Win, 1);
                                 _uiWinWindowView.WinText.text = text;
                             });
 
