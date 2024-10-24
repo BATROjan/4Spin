@@ -4,6 +4,7 @@ using UI.UILevelSelectWindow;
 using UI.UISelectOpponetWindow;
 using UI.UIService;
 using UI.UISettingsWindow;
+using UnityEngine;
 using UnityEngine.EventSystems;
 
 namespace UI.UIStartWindow
@@ -49,6 +50,12 @@ namespace UI.UIStartWindow
             _uiStartWindow.Buttons[0].OnClick += HideWindowAnimation;
             _uiStartWindow.Buttons[1].OnClick += StartTutorial;
             _uiStartWindow.Buttons[2].OnClick += OpenSettings;
+            _uiStartWindow.Buttons[3].OnClick += Exit;
+        }
+
+        private void Exit()
+        {
+            Application.Quit();
         }
 
         private void OpenSettings()
@@ -100,6 +107,7 @@ namespace UI.UIStartWindow
             _uiStartWindow.Buttons[0].OnClick -= HideWindowAnimation;
             _uiStartWindow.Buttons[1].OnClick -= StartTutorial;
             _uiStartWindow.Buttons[2].OnClick -= OpenSettings;
+            _uiStartWindow.Buttons[3].OnClick -= Exit;
         }
     }
 }
