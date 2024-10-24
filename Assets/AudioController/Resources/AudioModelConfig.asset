@@ -30,6 +30,6 @@ MonoBehaviour:
     Volume: 1
   - Type: 3
     GroupType: 1
-    AudioClip: {fileID: 8300000, guid: 4384d7ccdd72a48449de565ae3c4b1f9, type: 3}
+    AudioClip: {fileID: 8300000, guid: c2520814030be3246a82e3333d341400, type: 3}
     Loop: 1
     Volume: 1
